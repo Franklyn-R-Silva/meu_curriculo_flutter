@@ -14,20 +14,18 @@ class HeroSection extends StatelessWidget {
     final isMobile = size.width < 800;
 
     return SizedBox(
-      height: isMobile
-          ? 750
-          : 700, // Aumentei um pouco a altura para caber tudo
+      // Aumentei a altura para caber mais ícones sem poluir
+      height: isMobile ? 750 : 700,
       child: Stack(
         alignment: Alignment.center,
         children: [
           // === FUNDO COM ELEMENTOS FLUTUANTES (GRAVIDADE) ===
-          // Adicionei validação para não poluir muito no mobile,
-          // mas no Desktop vai aparecer a "galáxia" completa.
+          // Só mostramos a "galáxia" completa em telas maiores para não travar celulares antigos
           if (!isMobile) ...[
-            // --- Canto Superior Esquerdo ---
+            // --- GRUPO 1: MOBILE (Esquerda Superior) ---
             const Positioned(
               top: 40,
-              left: 80,
+              left: 100,
               child: MagneticElement(
                 strength: 1.5,
                 child: FaIcon(
@@ -38,8 +36,8 @@ class HeroSection extends StatelessWidget {
               ),
             ),
             const Positioned(
-              top: 120,
-              left: 200,
+              top: 100,
+              left: 220,
               child: MagneticElement(
                 strength: 1.1,
                 child: FaIcon(
@@ -49,8 +47,20 @@ class HeroSection extends StatelessWidget {
                 ), // Swift
               ),
             ),
+            const Positioned(
+              top: 180,
+              left: 80,
+              child: MagneticElement(
+                strength: 1.3,
+                child: FaIcon(
+                  FontAwesomeIcons.android,
+                  size: 40,
+                  color: Colors.green,
+                ), // Android/Kotlin
+              ),
+            ),
 
-            // --- Canto Superior Direito ---
+            // --- GRUPO 2: WEB & JS (Direita Superior) ---
             const Positioned(
               top: 60,
               right: 120,
@@ -64,8 +74,8 @@ class HeroSection extends StatelessWidget {
               ),
             ),
             const Positioned(
-              top: 150,
-              right: 280,
+              top: 140,
+              right: 250,
               child: MagneticElement(
                 strength: 0.9,
                 child: FaIcon(
@@ -76,35 +86,9 @@ class HeroSection extends StatelessWidget {
               ),
             ),
 
-            // --- Meio (Laterais) ---
+            // --- GRUPO 3: BACKEND & DADOS (Meio/Baixo) ---
             const Positioned(
-              top: 250,
-              left: 50,
-              child: MagneticElement(
-                strength: 1.3,
-                child: FaIcon(
-                  FontAwesomeIcons.android,
-                  size: 40,
-                  color: Colors.green,
-                ), // Android/Kotlin
-              ),
-            ),
-            const Positioned(
-              top: 300,
-              right: 80,
-              child: MagneticElement(
-                strength: 1.7,
-                child: FaIcon(
-                  FontAwesomeIcons.database,
-                  size: 35,
-                  color: Colors.redAccent,
-                ), // Oracle
-              ),
-            ),
-
-            // --- Canto Inferior Esquerdo ---
-            const Positioned(
-              bottom: 120,
+              bottom: 150,
               left: 150,
               child: MagneticElement(
                 strength: 1.2,
@@ -116,22 +100,36 @@ class HeroSection extends StatelessWidget {
               ),
             ),
             const Positioned(
-              bottom: 50,
-              left: 280,
+              bottom: 80,
+              left: 300,
+              child: MagneticElement(
+                strength: 1.7,
+                // Representando Oracle/Postgres/SQL
+                child: FaIcon(
+                  FontAwesomeIcons.database,
+                  size: 35,
+                  color: Colors.redAccent,
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 280,
+              right: 100,
               child: MagneticElement(
                 strength: 0.8,
+                // Representando Supabase (Raio/Bolt é comum para tecnologias rápidas)
                 child: FaIcon(
                   FontAwesomeIcons.bolt,
                   size: 30,
                   color: Colors.amber,
-                ), // Supabase (Bolt)
+                ),
               ),
             ),
 
-            // --- Canto Inferior Direito ---
+            // --- GRUPO 4: DEVOPS & TOOLS (Direita Inferior) ---
             const Positioned(
-              bottom: 80,
-              right: 100,
+              bottom: 60,
+              right: 150,
               child: MagneticElement(
                 strength: 1.8,
                 child: FaIcon(
@@ -142,8 +140,8 @@ class HeroSection extends StatelessWidget {
               ),
             ),
             const Positioned(
-              bottom: 180,
-              right: 250,
+              bottom: 160,
+              right: 280,
               child: MagneticElement(
                 strength: 1.0,
                 child: FaIcon(
@@ -155,12 +153,11 @@ class HeroSection extends StatelessWidget {
             ),
           ],
 
-          // === CONTEÚDO CENTRAL (SUA FOTO E TEXTO) ===
-          // A foto fica aqui no meio, dentro da Column
+          // === CONTEÚDO CENTRAL (FOTO E TEXTOS) ===
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Avatar com Efeito Magnético
+              // Avatar com Borda e Efeito Magnético
               MagneticElement(
                 strength: 0.5,
                 child: Container(
@@ -181,10 +178,8 @@ class HeroSection extends StatelessWidget {
                     ],
                   ),
                   child: const CircleAvatar(
-                    radius: 85,
-                    backgroundImage: AssetImage(
-                      AppAssets.profileImage,
-                    ), // SUA FOTO AQUI
+                    radius: 90, // Levemente maior
+                    backgroundImage: AssetImage(AppAssets.profileImage),
                     backgroundColor: Colors.white,
                   ),
                 ),
@@ -192,8 +187,9 @@ class HeroSection extends StatelessWidget {
 
               const SizedBox(height: 30),
 
+              // Nome com Efeito de Cor
               Text(
-                    "FRANKLYN ROBERTO",
+                    AppStrings.portfolioTitle.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.displayLarge?.copyWith(
                       fontWeight: FontWeight.w900,
@@ -202,22 +198,23 @@ class HeroSection extends StatelessWidget {
                       letterSpacing: -2,
                     ),
                   )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(
+                    duration: 3.seconds,
+                    color: const Color(AppColors.primary).withOpacity(0.3),
+                  ) // Brilho passando
                   .animate()
-                  .tint(
-                    color: const Color(AppColors.primary),
-                    duration: 2.seconds,
-                  )
-                  .fadeIn(),
+                  .fadeIn(duration: 800.ms),
 
               const SizedBox(height: 10),
 
               Text(
                 AppStrings.role,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 18,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   letterSpacing: 4,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.5, end: 0),
 
@@ -228,10 +225,11 @@ class HeroSection extends StatelessWidget {
                 child: Text(
                   AppStrings.aboutMe,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     height: 1.6,
-                    color: Colors.grey[700],
+                    color: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withOpacity(0.8),
                   ),
                 ),
               ).animate().fadeIn(delay: 500.ms),
@@ -255,6 +253,11 @@ class HeroSection extends StatelessWidget {
                   SocialButton(
                     icon: FontAwesomeIcons.whatsapp,
                     url: AppStrings.whatsappUrl,
+                  ),
+                  SizedBox(width: 20),
+                  SocialButton(
+                    icon: FontAwesomeIcons.envelope,
+                    url: AppStrings.emailUrl,
                   ),
                 ],
               ).animate().scale(delay: 700.ms, curve: Curves.elasticOut),
