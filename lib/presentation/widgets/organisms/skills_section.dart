@@ -10,33 +10,52 @@ class SkillsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Filtra as listas
+    final mobileSkills = skills
+        .where((s) => s.type == SkillType.mobile)
+        .toList();
+    final webSkills = skills.where((s) => s.type == SkillType.web).toList();
+    final toolsSkills = skills.where((s) => s.type == SkillType.tools).toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildCategory(context, "📱 MOBILE (CORE)", mobileSkills, 0),
+        const SizedBox(height: 40),
+        _buildCategory(context, "💻 WEB, BACKEND & DATA", webSkills, 200),
+        const SizedBox(height: 40),
+        _buildCategory(context, "⚙️ TOOLS & DEVOPS", toolsSkills, 400),
+      ],
+    );
+  }
+
+  Widget _buildCategory(
+    BuildContext context,
+    String title,
+    List<SkillModel> items,
+    int delayMs,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "HABILIDADES & TECNOLOGIAS",
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          title,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
+            color: Theme.of(context).colorScheme.primary,
+            letterSpacing: 1.1,
           ),
-        ),
-        const SizedBox(height: 24),
+        ).animate().fadeIn(delay: delayMs.ms).slideX(),
+
+        const SizedBox(height: 16),
+
         Wrap(
           spacing: 12,
           runSpacing: 12,
-          // Correção: Aplicamos .animate() na lista, não no Wrap
-          children: skills
-              .map((skill) {
-                return TechChip(
-                  label: skill.name,
-                  isHighlight: skill.isHighlight,
-                );
-              })
-              .toList()
-              .animate(interval: 50.ms) // Agora o intervalo funciona aqui
-              .fadeIn(duration: 400.ms)
-              .slideX(begin: -0.1, end: 0, curve: Curves.easeOut),
-        ),
+          children: items.map((skill) {
+            return TechChip(label: skill.name, isHighlight: skill.isHighlight);
+          }).toList(),
+        ).animate(delay: delayMs.ms).fadeIn(duration: 500.ms),
       ],
     );
   }

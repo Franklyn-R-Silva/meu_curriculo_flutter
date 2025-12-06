@@ -1,11 +1,13 @@
 import '../models/project_model.dart';
 import '../models/experience_model.dart';
 import '../models/skill_model.dart';
-import '../../core/constants/app_constants.dart';
 
 class MockData {
-  // --- EXPERIÊNCIAS (Extraído do seu HTML) ---
+  // ... (Mantenha as experiências e projetos como estavam ou atualize se quiser) ...
+  // Vou focar na atualização das SKILLS abaixo:
+
   static const List<ExperienceModel> experiences = [
+    // ... (Copie suas experiências antigas aqui)
     ExperienceModel(
       role: 'Desenvolvedor Fullstack',
       company: 'Plussoft',
@@ -27,25 +29,16 @@ class MockData {
       description:
           'Ensino de Programação Orientada a Objetos utilizando Java, Spring MVC e Design Patterns. Auxílio aos alunos em projetos práticos.',
     ),
-    ExperienceModel(
-      role: 'Técnico de Transmissão',
-      company: 'UFAL',
-      period: 'Ago 2021 - Dez 2021',
-      description:
-          'Suporte técnico em transmissões ao vivo, garantindo qualidade de áudio e vídeo e resolução de problemas em tempo real.',
-    ),
   ];
 
-  // --- PROJETOS (Seleção dos principais do seu GitHub) ---
   static const List<ProjectModel> projects = [
+    // ... (Copie seus projetos antigos aqui)
     ProjectModel(
       title: 'ImageLite',
       description:
           'Fullstack App com Spring Boot, React e Docker. Inclui autenticação JWT, PostgreSQL e upload de imagens.',
       techStack: ['Java', 'Spring Boot', 'React', 'Docker', 'PostgreSQL'],
       repoUrl: 'https://github.com/DevFullStack-Franklyn-R-Silva/ImageLite',
-      imageUrl:
-          'assets/img/project_placeholder.png', // Placeholder por enquanto
     ),
     ProjectModel(
       title: 'TCC - Livraria em Nuvem',
@@ -63,45 +56,42 @@ class MockData {
       repoUrl:
           'https://github.com/DevFullStack-Franklyn-R-Silva/Calculadora-em-Dart_Flutter',
     ),
-    ProjectModel(
-      title: 'Explorador de Postagens',
-      description:
-          'Aplicação dinâmica em React.js e Next.js para busca e visualização de posts. Nível intermediário/avançado.',
-      techStack: ['React', 'Next.js', 'API Integration'],
-      repoUrl:
-          'https://github.com/DevFullStack-Franklyn-R-Silva/Explorador-de-Postagens-em-React',
-    ),
-    ProjectModel(
-      title: 'Meu Currículo Web',
-      description:
-          'Versão anterior deste portfólio feita com HTML, CSS e Bootstrap. Base para a migração atual.',
-      techStack: ['HTML5', 'CSS3', 'Bootstrap'],
-      repoUrl:
-          'https://github.com/DevFullStack-Franklyn-R-Silva/Meu-Curriculo-Web',
-    ),
-    ProjectModel(
-      title: 'Gerador de QR Code',
-      description:
-          'Ferramenta web para geração instantânea de QR Codes utilizando ReactJS.',
-      techStack: ['React', 'JavaScript', 'Utils'],
-      repoUrl:
-          'https://github.com/DevFullStack-Franklyn-R-Silva/Gerador-de-QRCode-com-ReactJS',
-    ),
   ];
 
-  // --- SKILLS ---
+  // --- SKILLS ATUALIZADAS E CATEGORIZADAS ---
   static const List<SkillModel> skills = [
-    SkillModel(name: 'Flutter', isHighlight: true),
-    SkillModel(name: 'Dart', isHighlight: true),
-    SkillModel(name: 'Java', isHighlight: true),
-    SkillModel(name: 'Spring Boot', isHighlight: true),
-    SkillModel(name: 'ReactJS'),
-    SkillModel(name: 'Next.js'),
-    SkillModel(name: 'TypeScript'),
-    SkillModel(name: 'Docker'),
-    SkillModel(name: 'PostgreSQL'),
-    SkillModel(name: 'Git/GitHub'),
-    SkillModel(name: 'Electron'),
-    SkillModel(name: 'Microservices'),
+    // 📱 MOBILE (CORE)
+    SkillModel(name: 'Flutter', type: SkillType.mobile, isHighlight: true),
+    SkillModel(name: 'Dart', type: SkillType.mobile, isHighlight: true),
+    SkillModel(name: 'React Native', type: SkillType.mobile),
+    SkillModel(name: 'Kotlin', type: SkillType.mobile),
+    SkillModel(name: 'Swift', type: SkillType.mobile),
+    SkillModel(name: 'Java (Android)', type: SkillType.mobile),
+    SkillModel(name: 'Android Studio', type: SkillType.mobile),
+
+    // 💻 WEB, BACKEND & DESKTOP
+    SkillModel(name: 'Node.js', type: SkillType.web),
+    SkillModel(name: 'TypeScript', type: SkillType.web, isHighlight: true),
+    SkillModel(name: 'JavaScript', type: SkillType.web),
+    SkillModel(name: 'Electron', type: SkillType.web),
+    SkillModel(name: 'Spring Boot', type: SkillType.web, isHighlight: true),
+    SkillModel(name: 'Docker', type: SkillType.web, isHighlight: true),
+    SkillModel(name: 'Oracle', type: SkillType.web),
+    SkillModel(name: 'PostgreSQL', type: SkillType.web),
+    SkillModel(name: 'MySQL', type: SkillType.web),
+    SkillModel(name: 'HTML5 & CSS3', type: SkillType.web),
+    SkillModel(name: 'Tailwind CSS', type: SkillType.web),
+    SkillModel(name: 'Bootstrap', type: SkillType.web),
+
+    // ⚙️ TOOLS
+    SkillModel(name: 'Git', type: SkillType.tools),
+    SkillModel(name: 'GitHub', type: SkillType.tools),
+    SkillModel(name: 'VS Code', type: SkillType.tools),
+    SkillModel(name: 'Postman', type: SkillType.tools),
+    SkillModel(name: 'Figma', type: SkillType.tools),
+    SkillModel(name: 'FlutterFlow', type: SkillType.tools),
+    SkillModel(name: 'Xcode', type: SkillType.tools),
+    SkillModel(name: 'Supabase', type: SkillType.tools, isHighlight: true),
+    SkillModel(name: 'Linux', type: SkillType.tools),
   ];
 }
