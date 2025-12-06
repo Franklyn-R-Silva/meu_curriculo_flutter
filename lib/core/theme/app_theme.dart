@@ -8,22 +8,20 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(AppColors.primary),
-        background: const Color(AppColors.backgroundLight),
-        surface: const Color(AppColors.surfaceWhite),
+        surface: const Color(AppColors.backgroundLight),
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.poppinsTextTheme().apply(
         bodyColor: Colors.grey[800],
         displayColor: Colors.black87,
       ),
-      // Estilização global de Cards para ficarem elegantes
-      cardTheme: CardTheme(
+      // CORREÇÃO AQUI: Troque CardTheme por CardThemeData
+      cardTheme: CardThemeData(
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         color: Colors.white,
-        surfaceTintColor: Colors.white, // Remove tintura rosada do Material 3
+        surfaceTintColor: Colors.transparent,
       ),
-      // Botões com estilo padrão
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(AppColors.primary),

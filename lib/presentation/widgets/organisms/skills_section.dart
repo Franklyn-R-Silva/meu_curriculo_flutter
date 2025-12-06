@@ -22,19 +22,21 @@ class SkillsSection extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: skills.map((skill) {
+          spacing: 12,
+          runSpacing: 12,
+          // Correção: Aplicamos .animate() na lista, não no Wrap
+          children: skills
+              .map((skill) {
                 return TechChip(
                   label: skill.name,
                   isHighlight: skill.isHighlight,
                 );
-              }).toList(),
-            )
-            // Efeito cascata: anima os filhos (chips) sequencialmente
-            .animate(interval: 50.ms)
-            .fadeIn(duration: 400.ms)
-            .slideX(begin: -0.1, end: 0, curve: Curves.easeOut),
+              })
+              .toList()
+              .animate(interval: 50.ms) // Agora o intervalo funciona aqui
+              .fadeIn(duration: 400.ms)
+              .slideX(begin: -0.1, end: 0, curve: Curves.easeOut),
+        ),
       ],
     );
   }

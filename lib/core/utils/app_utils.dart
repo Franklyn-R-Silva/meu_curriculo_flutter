@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class AppUtils {
+  /// Abre uma URL no navegador externo.
+  /// Retorna false se não conseguir abrir.
+  static Future<void> launchURL(String url, {BuildContext? context}) async {
+    final Uri uri = Uri.parse(url);
+    try {
+      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+        throw Exception('Could not launch $url');
+      }
+    } catch (e) {
+      if (context != null && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Não foi possível abrir o link: $e')),
+        );
+      }
+      debugPrint("Erro ao abrir URL: $e");
+    }
+  }
+}
