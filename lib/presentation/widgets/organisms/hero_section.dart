@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/constants/app_constants.dart';
+import '../atoms/magnetic_element.dart';
 import '../atoms/social_button.dart';
 
 class HeroSection extends StatelessWidget {
@@ -9,97 +10,178 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Detecta se é mobile para ajustar tamanhos
-    final isMobile = MediaQuery.of(context).size.width < 700;
+    final size = MediaQuery.of(context).size;
+    final isMobile = size.width < 800;
 
-    return Column(
-      children: [
-        // 1. Foto de Perfil com Animação de Entrada
-        Container(
-              padding: const EdgeInsets.all(4), // Borda branca
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: [BoxShadow(blurRadius: 20, color: Colors.black12)],
+    return SizedBox(
+      height: isMobile ? 700 : 600,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // === FUNDO COM ELEMENTOS FLUTUANTES (GRAVIDADE) ===
+          if (!isMobile) ...[
+            const Positioned(
+              top: 50,
+              left: 100,
+              child: MagneticElement(
+                strength: 1.5,
+                child: FaIcon(
+                  FontAwesomeIcons.flutter,
+                  size: 40,
+                  color: Colors.blue,
+                ),
               ),
-              child: const CircleAvatar(
-                radius: 80,
-                backgroundImage: AssetImage(AppAssets.profileImage),
+            ),
+            const Positioned(
+              top: 100,
+              right: 150,
+              child: MagneticElement(
+                strength: 2.0,
+                child: FaIcon(
+                  FontAwesomeIcons.react,
+                  size: 50,
+                  color: Colors.cyan,
+                ),
               ),
-            )
-            .animate()
-            .fadeIn(duration: 800.ms)
-            .scale(delay: 200.ms, curve: Curves.easeOutBack), // Efeito "pop"
-
-        const SizedBox(height: 24),
-
-        // 2. Nome
-        Text(
-          AppStrings.portfolioTitle,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.displayLarge?.copyWith(
-            fontWeight: FontWeight.w800,
-            fontSize: isMobile ? 40 : 64,
-            height: 1.0,
-          ),
-        ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.3, end: 0),
-
-        // 3. Cargo (Efeito de Digitação pode ser adicionado aqui, mas vamos de fade simples e elegante)
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Text(
-            AppStrings.role,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.w600,
-              fontSize: isMobile ? 18 : 24,
             ),
-          ),
-        ).animate().fadeIn(delay: 600.ms),
-
-        // 4. Bio
-        SizedBox(
-          width:
-              700, // Limita largura em telas grandes para não ficar ruim de ler
-          child: Text(
-            AppStrings.aboutMe,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              height: 1.6,
-              color: Colors.grey[700],
+            const Positioned(
+              bottom: 100,
+              left: 200,
+              child: MagneticElement(
+                strength: 1.2,
+                child: FaIcon(
+                  FontAwesomeIcons.java,
+                  size: 45,
+                  color: Colors.orange,
+                ),
+              ),
             ),
-          ),
-        ).animate().fadeIn(delay: 800.ms),
-
-        const SizedBox(height: 32),
-
-        // 5. Botões Sociais
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            SocialButton(
-              icon: FontAwesomeIcons.linkedin,
-              url: AppStrings.linkedInUrl,
+            const Positioned(
+              bottom: 50,
+              right: 100,
+              child: MagneticElement(
+                strength: 1.8,
+                child: FaIcon(
+                  FontAwesomeIcons.docker,
+                  size: 35,
+                  color: Colors.blueAccent,
+                ),
+              ),
             ),
-            SizedBox(width: 16),
-            SocialButton(
-              icon: FontAwesomeIcons.github,
-              url: AppStrings.gitHubUrl,
-            ),
-            SizedBox(width: 16),
-            SocialButton(
-              icon: FontAwesomeIcons.whatsapp,
-              url: AppStrings.whatsappUrl,
-            ),
-            SizedBox(width: 16),
-            SocialButton(
-              icon: FontAwesomeIcons.envelope,
-              url: AppStrings.emailUrl,
+            const Positioned(
+              top: 200,
+              right: 300,
+              child: MagneticElement(
+                strength: 0.8,
+                child: Icon(Icons.code, size: 30, color: Colors.grey),
+              ),
             ),
           ],
-        ).animate().fadeIn(delay: 1000.ms).slideY(begin: 0.5, end: 0),
-      ],
+
+          // === CONTEÚDO CENTRAL ===
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Avatar com Efeito Magnético
+              MagneticElement(
+                strength: 0.5,
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: const LinearGradient(
+                      colors: [Color(AppColors.primary), Colors.purple],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(AppColors.primary).withOpacity(0.4),
+                        blurRadius: 30,
+                        spreadRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: const CircleAvatar(
+                    radius: 85,
+                    backgroundImage: AssetImage(AppAssets.profileImage),
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 30),
+
+              Text(
+                    "FRANKLYN ROBERTO",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                      fontWeight: FontWeight.w900,
+                      fontSize: isMobile ? 40 : 72,
+                      height: 0.9,
+                      letterSpacing: -2,
+                    ),
+                  )
+                  .animate()
+                  .tint(
+                    color: const Color(AppColors.primary),
+                    duration: 2.seconds,
+                  )
+                  .fadeIn(),
+
+              const SizedBox(height: 10),
+
+              Text(
+                AppStrings.role,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 4,
+                ),
+              ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.5, end: 0),
+
+              const SizedBox(height: 30),
+
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 600),
+                child: Text(
+                  AppStrings.aboutMe,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    height: 1.6,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ).animate().fadeIn(delay: 500.ms),
+
+              const SizedBox(height: 40),
+
+              // Botões Sociais
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  SocialButton(
+                    icon: FontAwesomeIcons.linkedin,
+                    url: AppStrings.linkedInUrl,
+                  ),
+                  SizedBox(width: 20),
+                  SocialButton(
+                    icon: FontAwesomeIcons.github,
+                    url: AppStrings.gitHubUrl,
+                  ),
+                  SizedBox(width: 20),
+                  SocialButton(
+                    icon: FontAwesomeIcons.whatsapp,
+                    url: AppStrings.whatsappUrl,
+                  ),
+                ],
+              ).animate().scale(delay: 700.ms, curve: Curves.elasticOut),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

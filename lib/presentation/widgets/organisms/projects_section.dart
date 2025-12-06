@@ -23,9 +23,8 @@ class ProjectsSection extends StatelessWidget {
                 letterSpacing: 1.2,
               ),
             ),
-            // Botão "Ver todos"
             TextButton.icon(
-              onPressed: () {}, // Link para GitHub Tab Repositories
+              onPressed: () {},
               icon: const Icon(Icons.arrow_forward),
               label: const Text("Ver todos no GitHub"),
             ),
@@ -35,7 +34,7 @@ class ProjectsSection extends StatelessWidget {
 
         LayoutBuilder(
           builder: (context, constraints) {
-            // Lógica de Breakpoints
+            // Lógica responsiva para o Grid
             int crossAxisCount = 1;
             if (constraints.maxWidth > 1100)
               crossAxisCount = 3;
@@ -49,7 +48,7 @@ class ProjectsSection extends StatelessWidget {
                 crossAxisCount: crossAxisCount,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
-                childAspectRatio: 1.3, // Cards retangulares
+                childAspectRatio: 1.3,
               ),
               itemCount: projects.length,
               itemBuilder: (context, index) {
