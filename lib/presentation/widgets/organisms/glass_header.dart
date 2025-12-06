@@ -1,14 +1,18 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../controllers/portfolio_controller.dart';
 
 class GlassHeader extends StatelessWidget {
   const GlassHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<PortfolioController>();
     final isDesktop = MediaQuery.of(context).size.width > 700;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Center(
       child:
@@ -16,57 +20,86 @@ class GlassHeader extends StatelessWidget {
             margin: const EdgeInsets.only(top: 20),
             constraints: const BoxConstraints(maxWidth: 1000),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(
-                50,
-              ), // Borda redonda estilo App
+              borderRadius: BorderRadius.circular(50),
               child: BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 10,
-                  sigmaY: 10,
-                ), // Efeito de Vidro
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 30,
-                    vertical: 15,
+                    vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.7),
+                    color: isDark
+                        ? Colors.black.withOpacity(0.6)
+                        : Colors.white.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(50),
-                    border: Border.all(color: Colors.white.withOpacity(0.2)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
+                    border: Border.all(
+                      color: isDark
+                          ? Colors.white.withOpacity(0.1)
+                          : Colors.white.withOpacity(0.5),
+                    ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "<Franklyn />",
-                        style: TextStyle(
-                          fontFamily: 'Code', // Se tiver fonte mono
-                          fontWeight: FontWeight.w900,
-                          fontSize: 20,
-                          color: const Color(AppColors.primary),
+                      // Logo / Nome
+                      GestureDetector(
+                        onTap: () =>
+                            controller.scrollToSection(controller.heroKey),
+                        child: Text(
+                          "<Franklyn />",
+                          style: TextStyle(
+                            fontFamily: 'Code',
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                       ),
+
                       if (isDesktop)
                         Row(
                           children: [
-                            _HeaderItem(title: "Sobre", onTap: () {}),
+                            _HeaderItem(
+                              title: "Skills",
+                              onTap: () => controller.scrollToSection(
+                                controller.skillsKey,
+                              ),
+                            ),
                             const SizedBox(width: 20),
-                            _HeaderItem(title: "Skills", onTap: () {}),
+                            _HeaderItem(
+                              title: "Experiência",
+                              onTap: () => controller.scrollToSection(
+                                controller.experienceKey,
+                              ),
+                            ),
                             const SizedBox(width: 20),
-                            _HeaderItem(title: "Projetos", onTap: () {}),
+                            _HeaderItem(
+                              title: "Projetos",
+                              onTap: () => controller.scrollToSection(
+                                controller.projectsKey,
+                              ),
+                            ),
+                            const SizedBox(width: 30),
+
+                            // Theme Toggle Switch
+                            IconButton(
+                              icon: Icon(
+                                isDark ? Icons.light_mode : Icons.dark_mode,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              onPressed: controller.toggleTheme,
+                              tooltip: "Alternar Tema",
+                            ).animate().rotate(duration: 500.ms),
                           ],
                         )
                       else
+                        // Mobile: Apenas o Toggle por enquanto (menu drawer seria ideal)
                         IconButton(
-                          icon: const Icon(Icons.menu),
-                          onPressed: () {},
+                          icon: Icon(
+                            isDark ? Icons.light_mode : Icons.dark_mode,
+                          ),
+                          onPressed: controller.toggleTheme,
                         ),
                     ],
                   ),
@@ -78,7 +111,7 @@ class GlassHeader extends StatelessWidget {
             end: 0,
             duration: 800.ms,
             curve: Curves.easeOutBack,
-          ), // Cai do céu
+          ),
     );
   }
 }
@@ -98,6 +131,8 @@ class _HeaderItemState extends State<_HeaderItem> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
@@ -106,18 +141,20 @@ class _HeaderItemState extends State<_HeaderItem> {
         onTap: widget.onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: isHovered
-                ? const Color(AppColors.primary)
+                ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
             widget.title,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: isHovered ? Colors.white : Colors.black87,
+              fontWeight: isHovered ? FontWeight.bold : FontWeight.w500,
+              color: isHovered
+                  ? Theme.of(context).colorScheme.primary
+                  : (isDark ? Colors.white : Colors.black87),
             ),
           ),
         ),

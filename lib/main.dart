@@ -16,19 +16,24 @@ class MeuCurriculoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Injeção do Repository
         Provider<IPortfolioRepository>(create: (_) => PortfolioRepository()),
-        // Injeção do Controller (depende do Repository)
         ChangeNotifierProvider<PortfolioController>(
           create: (context) =>
               PortfolioController(context.read<IPortfolioRepository>()),
         ),
       ],
-      child: MaterialApp(
-        title: 'Franklyn Roberto - Portfólio',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        home: const HomePage(),
+      child: Consumer<PortfolioController>(
+        // Ouve mudanças de tema
+        builder: (context, controller, child) {
+          return MaterialApp(
+            title: 'Franklyn Roberto - Portfólio',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: controller.themeMode, // Alterna dinamicamente
+            home: const HomePage(),
+          );
+        },
       ),
     );
   }

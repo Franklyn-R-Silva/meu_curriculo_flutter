@@ -9,39 +9,59 @@ class PortfolioController extends ChangeNotifier {
 
   PortfolioController(this.repository);
 
-  // Listas de dados
+  // --- DADOS ---
   List<ProjectModel> projects = [];
   List<ExperienceModel> experiences = [];
   List<SkillModel> skills = [];
-
-  // Estado de carregamento
   bool isLoading = true;
 
-  // Método para inicializar tudo
+  // --- TEMA (Dark/Light) ---
+  ThemeMode _themeMode = ThemeMode.light;
+  ThemeMode get themeMode => _themeMode;
+
+  void toggleTheme() {
+    _themeMode = _themeMode == ThemeMode.light
+        ? ThemeMode.dark
+        : ThemeMode.light;
+    notifyListeners();
+  }
+
+  // --- NAVEGAÇÃO (Scroll) ---
+  final ScrollController scrollController = ScrollController();
+  final heroKey = GlobalKey();
+  final skillsKey = GlobalKey();
+  final experienceKey = GlobalKey();
+  final projectsKey = GlobalKey();
+
+  Future<void> scrollToSection(GlobalKey key) async {
+    final context = key.currentContext;
+    if (context != null) {
+      await Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOutCubic,
+      );
+    }
+  }
+
+  // --- INICIALIZAÇÃO ---
   Future<void> loadAllData() async {
     isLoading = true;
-    notifyListeners(); // Avisa a tela para mostrar loading
+    notifyListeners();
 
     try {
-      // Busca tudo em paralelo para ser mais rápido
       await Future.wait([_loadProjects(), _loadExperiences(), _loadSkills()]);
     } catch (e) {
       debugPrint('Erro ao carregar dados: $e');
     } finally {
       isLoading = false;
-      notifyListeners(); // Avisa a tela que acabou
+      notifyListeners();
     }
   }
 
-  Future<void> _loadProjects() async {
-    projects = await repository.getProjects();
-  }
-
-  Future<void> _loadExperiences() async {
-    experiences = await repository.getExperiences();
-  }
-
-  Future<void> _loadSkills() async {
-    skills = await repository.getSkills();
-  }
+  Future<void> _loadProjects() async =>
+      projects = await repository.getProjects();
+  Future<void> _loadExperiences() async =>
+      experiences = await repository.getExperiences();
+  Future<void> _loadSkills() async => skills = await repository.getSkills();
 }

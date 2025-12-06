@@ -3,23 +3,61 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_constants.dart';
 
 class AppTheme {
-  static ThemeData get lightTheme {
+  // Cores Light
+  static const Color _lightBackground = Color(0xFFF9F9F9);
+  static const Color _lightSurface = Colors.white;
+  static const Color _lightText = Color(0xFF1A1A1A);
+
+  // Cores Dark (Cyberpunk/Professional)
+  static const Color _darkBackground = Color(0xFF121212);
+  static const Color _darkSurface = Color(0xFF1E1E1E);
+  static const Color _darkText = Color(0xFFE0E0E0);
+
+  static ThemeData get lightTheme => _buildTheme(
+    brightness: Brightness.light,
+    background: _lightBackground,
+    surface: _lightSurface,
+    textColor: _lightText,
+  );
+
+  static ThemeData get darkTheme => _buildTheme(
+    brightness: Brightness.dark,
+    background: _darkBackground,
+    surface: _darkSurface,
+    textColor: _darkText,
+  );
+
+  static ThemeData _buildTheme({
+    required Brightness brightness,
+    required Color background,
+    required Color surface,
+    required Color textColor,
+  }) {
     return ThemeData(
       useMaterial3: true,
+      brightness: brightness,
+      scaffoldBackgroundColor: background,
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(AppColors.primary),
-        surface: const Color(AppColors.backgroundLight),
-        brightness: Brightness.light,
+        brightness: brightness,
+        surface: surface,
+        background: background,
       ),
       textTheme: GoogleFonts.poppinsTextTheme().apply(
-        bodyColor: Colors.grey[800],
-        displayColor: Colors.black87,
+        bodyColor: textColor,
+        displayColor: textColor,
       ),
-      // CORREÇÃO AQUI: Troque CardTheme por CardThemeData
       cardTheme: CardThemeData(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        color: Colors.white,
+        elevation: 0, // Design flat é mais moderno
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: brightness == Brightness.dark
+                ? Colors.white.withOpacity(0.1)
+                : Colors.black.withOpacity(0.05),
+          ),
+        ),
+        color: surface,
         surfaceTintColor: Colors.transparent,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -28,8 +66,11 @@ class AppTheme {
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          elevation: 4,
+          shadowColor: const Color(AppColors.primary).withOpacity(0.4),
         ),
       ),
+      iconTheme: IconThemeData(color: textColor),
     );
   }
 }

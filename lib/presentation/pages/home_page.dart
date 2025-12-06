@@ -7,7 +7,8 @@ import '../widgets/organisms/hero_section.dart';
 import '../widgets/organisms/skills_section.dart';
 import '../widgets/organisms/experience_section.dart';
 import '../widgets/organisms/projects_section.dart';
-import '../widgets/organisms/glass_header.dart'; // Importante importar o header
+import '../widgets/organisms/glass_header.dart';
+import '../widgets/atoms/background_pattern.dart'; // Importe a textura
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,60 +31,84 @@ class _HomePageState extends State<HomePage> {
     final controller = context.watch<PortfolioController>();
 
     return Scaffold(
-      backgroundColor: const Color(AppColors.backgroundLight),
-      body: controller.isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Stack(
-              children: [
-                // 1. CONTEÚDO SCROLLÁVEL (Fica atrás do Header)
-                SingleChildScrollView(
-                  // Adicionamos padding no topo para o conteúdo não ficar escondido atrás do menu
-                  padding: const EdgeInsets.only(top: 100, bottom: 60),
-                  child: Center(
-                    child: Container(
-                      constraints: const BoxConstraints(maxWidth: 1200),
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Column(
-                        children: [
-                          const HeroSection(),
-                          const SizedBox(height: 100),
+      // BackgroundPattern envolve todo o corpo
+      body: BackgroundPattern(
+        child: controller.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Stack(
+                children: [
+                  SingleChildScrollView(
+                    controller:
+                        controller.scrollController, // Conecta o controller
+                    padding: const EdgeInsets.only(top: 100, bottom: 60),
+                    child: Center(
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 1200),
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          children: [
+                            HeroSection(key: controller.heroKey), // Key aqui
+                            const SizedBox(height: 100),
 
-                          SkillsSection(skills: controller.skills),
-                          const SizedBox(height: 120),
+                            const Divider(height: 1, thickness: 0.5),
+                            const SizedBox(height: 80),
 
-                          ExperienceSection(
-                            experiences: controller.experiences,
-                          ),
-                          const SizedBox(height: 120),
+                            SkillsSection(
+                              key: controller.skillsKey,
+                              skills: controller.skills,
+                            ), // Key aqui
+                            const SizedBox(height: 100),
 
-                          ProjectsSection(projects: controller.projects),
-                          const SizedBox(height: 150),
+                            ExperienceSection(
+                              key: controller.experienceKey,
+                              experiences: controller.experiences,
+                            ), // Key aqui
+                            const SizedBox(height: 100),
 
-                          const Text(
-                            "© 2025 Franklyn Roberto - Desenvolvido com Flutter 💙",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
+                            ProjectsSection(
+                              key: controller.projectsKey,
+                              projects: controller.projects,
+                            ), // Key aqui
+                            const SizedBox(height: 150),
+
+                            // Footer com Copyright
+                            Column(
+                              children: [
+                                const Text(
+                                  "Feito com Flutter 3.27 & 💙",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  "© ${DateTime.now().year} Franklyn Roberto",
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                // 2. HEADER FLUTUANTE (Fixo no topo com Glassmorphism)
-                const Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: GlassHeader(),
-                ),
-              ],
-            ),
+                  // Header Flutuante
+                  const Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: GlassHeader(),
+                  ),
+                ],
+              ),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => launchUrl(Uri.parse(AppAssets.cvPtBr)),
         label: const Text("Baixar CV"),
-        icon: const Icon(Icons.download),
-        // Use surface ou primaryContainer se primary for muito forte no tema novo
-        backgroundColor: const Color(AppColors.primary),
+        icon: const Icon(Icons.download_rounded),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
     );
