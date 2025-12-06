@@ -14,27 +14,46 @@ class HeroSection extends StatelessWidget {
     final isMobile = size.width < 800;
 
     return SizedBox(
-      height: isMobile ? 700 : 600,
+      height: isMobile
+          ? 750
+          : 700, // Aumentei um pouco a altura para caber tudo
       child: Stack(
         alignment: Alignment.center,
         children: [
           // === FUNDO COM ELEMENTOS FLUTUANTES (GRAVIDADE) ===
+          // Adicionei validação para não poluir muito no mobile,
+          // mas no Desktop vai aparecer a "galáxia" completa.
           if (!isMobile) ...[
+            // --- Canto Superior Esquerdo ---
             const Positioned(
-              top: 50,
-              left: 100,
+              top: 40,
+              left: 80,
               child: MagneticElement(
                 strength: 1.5,
                 child: FaIcon(
                   FontAwesomeIcons.flutter,
-                  size: 40,
+                  size: 45,
                   color: Colors.blue,
                 ),
               ),
             ),
             const Positioned(
-              top: 100,
-              right: 150,
+              top: 120,
+              left: 200,
+              child: MagneticElement(
+                strength: 1.1,
+                child: FaIcon(
+                  FontAwesomeIcons.swift,
+                  size: 35,
+                  color: Colors.deepOrange,
+                ), // Swift
+              ),
+            ),
+
+            // --- Canto Superior Direito ---
+            const Positioned(
+              top: 60,
+              right: 120,
               child: MagneticElement(
                 strength: 2.0,
                 child: FaIcon(
@@ -45,8 +64,48 @@ class HeroSection extends StatelessWidget {
               ),
             ),
             const Positioned(
-              bottom: 100,
-              left: 200,
+              top: 150,
+              right: 280,
+              child: MagneticElement(
+                strength: 0.9,
+                child: FaIcon(
+                  FontAwesomeIcons.apple,
+                  size: 40,
+                  color: Colors.black54,
+                ), // iOS
+              ),
+            ),
+
+            // --- Meio (Laterais) ---
+            const Positioned(
+              top: 250,
+              left: 50,
+              child: MagneticElement(
+                strength: 1.3,
+                child: FaIcon(
+                  FontAwesomeIcons.android,
+                  size: 40,
+                  color: Colors.green,
+                ), // Android/Kotlin
+              ),
+            ),
+            const Positioned(
+              top: 300,
+              right: 80,
+              child: MagneticElement(
+                strength: 1.7,
+                child: FaIcon(
+                  FontAwesomeIcons.database,
+                  size: 35,
+                  color: Colors.redAccent,
+                ), // Oracle
+              ),
+            ),
+
+            // --- Canto Inferior Esquerdo ---
+            const Positioned(
+              bottom: 120,
+              left: 150,
               child: MagneticElement(
                 strength: 1.2,
                 child: FaIcon(
@@ -58,27 +117,46 @@ class HeroSection extends StatelessWidget {
             ),
             const Positioned(
               bottom: 50,
+              left: 280,
+              child: MagneticElement(
+                strength: 0.8,
+                child: FaIcon(
+                  FontAwesomeIcons.bolt,
+                  size: 30,
+                  color: Colors.amber,
+                ), // Supabase (Bolt)
+              ),
+            ),
+
+            // --- Canto Inferior Direito ---
+            const Positioned(
+              bottom: 80,
               right: 100,
               child: MagneticElement(
                 strength: 1.8,
                 child: FaIcon(
                   FontAwesomeIcons.docker,
-                  size: 35,
+                  size: 40,
                   color: Colors.blueAccent,
                 ),
               ),
             ),
             const Positioned(
-              top: 200,
-              right: 300,
+              bottom: 180,
+              right: 250,
               child: MagneticElement(
-                strength: 0.8,
-                child: Icon(Icons.code, size: 30, color: Colors.grey),
+                strength: 1.0,
+                child: FaIcon(
+                  FontAwesomeIcons.gitAlt,
+                  size: 35,
+                  color: Colors.deepOrangeAccent,
+                ), // Git
               ),
             ),
           ],
 
-          // === CONTEÚDO CENTRAL ===
+          // === CONTEÚDO CENTRAL (SUA FOTO E TEXTO) ===
+          // A foto fica aqui no meio, dentro da Column
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -104,7 +182,9 @@ class HeroSection extends StatelessWidget {
                   ),
                   child: const CircleAvatar(
                     radius: 85,
-                    backgroundImage: AssetImage(AppAssets.profileImage),
+                    backgroundImage: AssetImage(
+                      AppAssets.profileImage,
+                    ), // SUA FOTO AQUI
                     backgroundColor: Colors.white,
                   ),
                 ),
