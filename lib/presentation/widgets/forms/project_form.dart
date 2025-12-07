@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/tech_suggestions.dart';
 import '../../../data/models/project_model.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/portfolio_controller.dart';
@@ -19,7 +20,8 @@ class _ProjectFormState extends State<ProjectForm> {
   late TextEditingController _repoCtrl;
   late TextEditingController _liveCtrl;
   late TextEditingController _imgCtrl;
-  late TextEditingController _techCtrl;
+  
+  List<String> _selectedTechs = [];
 
   bool _isLoading = false;
 
@@ -31,9 +33,7 @@ class _ProjectFormState extends State<ProjectForm> {
     _repoCtrl = TextEditingController(text: widget.project?.repoUrl ?? '');
     _liveCtrl = TextEditingController(text: widget.project?.liveUrl ?? '');
     _imgCtrl = TextEditingController(text: widget.project?.imageUrl ?? '');
-    _techCtrl = TextEditingController(
-      text: widget.project?.techStack.join(', ') ?? '',
-    );
+    _selectedTechs = List.from(widget.project?.techStack ?? []);
   }
 
   @override
@@ -43,7 +43,6 @@ class _ProjectFormState extends State<ProjectForm> {
     _repoCtrl.dispose();
     _liveCtrl.dispose();
     _imgCtrl.dispose();
-    _techCtrl.dispose();
     super.dispose();
   }
 
@@ -52,12 +51,6 @@ class _ProjectFormState extends State<ProjectForm> {
 
     setState(() => _isLoading = true);
 
-    final techStack = _techCtrl.text
-        .split(',')
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toList();
-
     final model = ProjectModel(
       id: widget.project?.id,
       title: _titleCtrl.text,
@@ -65,7 +58,7 @@ class _ProjectFormState extends State<ProjectForm> {
       repoUrl: _repoCtrl.text,
       liveUrl: _liveCtrl.text.isEmpty ? null : _liveCtrl.text,
       imageUrl: _imgCtrl.text.isEmpty ? null : _imgCtrl.text,
-      techStack: techStack,
+      techStack: _selectedTechs,
     );
 
     try {
@@ -149,12 +142,130 @@ class _ProjectFormState extends State<ProjectForm> {
                         required: true,
                       ),
                       const SizedBox(height: 16),
-                      _buildTextField(
-                        controller: _techCtrl,
-                        label: 'Tecnologias',
-                        hint: 'Flutter, Dart, Firebase',
-                        icon: Icons.code,
-                        required: true,
+                      const SizedBox(height: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Tecnologias *',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: _selectedTechs.map((tech) {
+                              return Chip(
+                                label: Text(tech),
+                                onDeleted: () {
+                                  setState(() {
+                                    _selectedTechs.remove(tech);
+                                  });
+                                },
+                              );
+                            }).toList(),
+                          ),
+                          const SizedBox(height: 8),
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              return Autocomplete<String>(
+                                optionsBuilder:
+                                    (TextEditingValue textEditingValue) {
+                                  if (textEditingValue.text == '') {
+                                    return const Iterable<String>.empty();
+                                  }
+                                  return kTechSuggestions.where((String option) {
+                                    return option.toLowerCase().contains(
+                                              textEditingValue.text
+                                                  .toLowerCase(),
+                                            ) &&
+                                        !_selectedTechs.contains(option);
+                                  });
+                                },
+                                onSelected: (String selection) {
+                                  setState(() {
+                                    _selectedTechs.add(selection);
+                                  });
+                                },
+                                fieldViewBuilder: (
+                                  BuildContext context,
+                                  TextEditingController
+                                      fieldTextEditingController,
+                                  FocusNode fieldFocusNode,
+                                  VoidCallback onFieldSubmitted,
+                                ) {
+                                  return TextFormField(
+                                    controller: fieldTextEditingController,
+                                    focusNode: fieldFocusNode,
+                                    decoration: InputDecoration(
+                                      labelText: 'Adicionar Tecnologia',
+                                      prefixIcon: const Icon(Icons.code),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.grey.shade50,
+                                      suffixIcon: IconButton(
+                                        icon: const Icon(Icons.add),
+                                        onPressed: () {
+                                          if (fieldTextEditingController
+                                              .text.isNotEmpty) {
+                                            setState(() {
+                                              _selectedTechs.add(
+                                                  fieldTextEditingController
+                                                      .text);
+                                              fieldTextEditingController
+                                                  .clear();
+                                            });
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    onFieldSubmitted: (value) {
+                                      if (value.isNotEmpty) {
+                                        setState(() {
+                                          _selectedTechs.add(value);
+                                          fieldTextEditingController.clear();
+                                        });
+                                      }
+                                    },
+                                  );
+                                },
+                                optionsViewBuilder: (
+                                  BuildContext context,
+                                  AutocompleteOnSelected<String> onSelected,
+                                  Iterable<String> options,
+                                ) {
+                                  return Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Material(
+                                      elevation: 4.0,
+                                      child: SizedBox(
+                                        width: constraints.maxWidth,
+                                        child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          itemCount: options.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            final String option =
+                                                options.elementAt(index);
+                                            return ListTile(
+                                              title: Text(option),
+                                              onTap: () {
+                                                onSelected(option);
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(

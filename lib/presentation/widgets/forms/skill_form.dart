@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/tech_suggestions.dart';
 import '../../../data/models/skill_model.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/portfolio_controller.dart';
@@ -116,11 +117,81 @@ class _SkillFormState extends State<SkillForm> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      _buildTextField(
-                        controller: _nameCtrl,
-                        label: 'Nome',
-                        icon: Icons.label,
-                        required: true,
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Autocomplete<String>(
+                            initialValue:
+                                TextEditingValue(text: _nameCtrl.text),
+                            optionsBuilder: (TextEditingValue textEditingValue) {
+                              if (textEditingValue.text == '') {
+                                return const Iterable<String>.empty();
+                              }
+                              return kTechSuggestions.where((String option) {
+                                return option.toLowerCase().contains(
+                                      textEditingValue.text.toLowerCase(),
+                                    );
+                              });
+                            },
+                            onSelected: (String selection) {
+                              _nameCtrl.text = selection;
+                            },
+                            fieldViewBuilder: (
+                              BuildContext context,
+                              TextEditingController fieldTextEditingController,
+                              FocusNode fieldFocusNode,
+                              VoidCallback onFieldSubmitted,
+                            ) {
+                              return TextFormField(
+                                controller: fieldTextEditingController,
+                                focusNode: fieldFocusNode,
+                                decoration: InputDecoration(
+                                  labelText: 'Nome *',
+                                  prefixIcon: const Icon(Icons.label),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.grey.shade50,
+                                ),
+                                validator: (v) => v?.isEmpty == true
+                                    ? 'Campo obrigatório'
+                                    : null,
+                                onChanged: (val) => _nameCtrl.text = val,
+                              );
+                            },
+                            optionsViewBuilder: (
+                              BuildContext context,
+                              AutocompleteOnSelected<String> onSelected,
+                              Iterable<String> options,
+                            ) {
+                              return Align(
+                                alignment: Alignment.topLeft,
+                                child: Material(
+                                  elevation: 4.0,
+                                  child: SizedBox(
+                                    width: constraints.maxWidth,
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      itemCount: options.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        final String option =
+                                            options.elementAt(index);
+                                        return ListTile(
+                                          title: Text(option),
+                                          onTap: () {
+                                            onSelected(option);
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
