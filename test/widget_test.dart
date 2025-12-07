@@ -65,6 +65,8 @@ void main() {
     verify(() => mockRepository.getExperiences()).called(1);
     verify(() => mockRepository.getSkills()).called(1);
     verify(() => mockRepository.getCertificates()).called(1);
+
+    await tester.pump(const Duration(seconds: 6));
   });
 
   testWidgets('HomePage shows error message when loading fails', (
@@ -92,5 +94,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Tentar novamente'), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 6));
   });
 }
