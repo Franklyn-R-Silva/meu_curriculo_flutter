@@ -189,75 +189,89 @@ class _CertificateFormState extends State<CertificateForm> {
                             child: LayoutBuilder(
                               builder: (context, constraints) {
                                 return Autocomplete<String>(
-                                  initialValue:
-                                      TextEditingValue(text: _langCtrl.text),
+                                  initialValue: TextEditingValue(
+                                    text: _langCtrl.text,
+                                  ),
                                   optionsBuilder:
                                       (TextEditingValue textEditingValue) {
-                                    if (textEditingValue.text == '') {
-                                      return const Iterable<String>.empty();
-                                    }
-                                    return kTechSuggestions.where((String option) {
-                                      return option.toLowerCase().contains(
+                                        if (textEditingValue.text == '') {
+                                          return const Iterable<String>.empty();
+                                        }
+                                        return kTechSuggestions.where((
+                                          String option,
+                                        ) {
+                                          return option.toLowerCase().contains(
                                             textEditingValue.text.toLowerCase(),
                                           );
-                                    });
-                                  },
+                                        });
+                                      },
                                   onSelected: (String selection) {
                                     _langCtrl.text = selection;
                                   },
-                                  fieldViewBuilder: (
-                                    BuildContext context,
-                                    TextEditingController
+                                  fieldViewBuilder:
+                                      (
+                                        BuildContext context,
+                                        TextEditingController
                                         fieldTextEditingController,
-                                    FocusNode fieldFocusNode,
-                                    VoidCallback onFieldSubmitted,
-                                  ) {
-                                    return TextFormField(
-                                      controller: fieldTextEditingController,
-                                      focusNode: fieldFocusNode,
-                                      decoration: InputDecoration(
-                                        labelText: 'Linguagem',
-                                        prefixIcon: const Icon(Icons.code),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.grey.shade50,
-                                      ),
-                                      onChanged: (val) => _langCtrl.text = val,
-                                    );
-                                  },
-                                  optionsViewBuilder: (
-                                    BuildContext context,
-                                    AutocompleteOnSelected<String> onSelected,
-                                    Iterable<String> options,
-                                  ) {
-                                    return Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Material(
-                                        elevation: 4.0,
-                                        child: SizedBox(
-                                          width: constraints.maxWidth,
-                                          child: ListView.builder(
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            itemCount: options.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              final String option =
-                                                  options.elementAt(index);
-                                              return ListTile(
-                                                title: Text(option),
-                                                onTap: () {
-                                                  onSelected(option);
-                                                },
-                                              );
-                                            },
+                                        FocusNode fieldFocusNode,
+                                        VoidCallback onFieldSubmitted,
+                                      ) {
+                                        return TextFormField(
+                                          controller:
+                                              fieldTextEditingController,
+                                          focusNode: fieldFocusNode,
+                                          decoration: InputDecoration(
+                                            labelText: 'Linguagem',
+                                            prefixIcon: const Icon(Icons.code),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.grey.shade50,
                                           ),
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                          onChanged: (val) =>
+                                              _langCtrl.text = val,
+                                        );
+                                      },
+                                  optionsViewBuilder:
+                                      (
+                                        BuildContext context,
+                                        AutocompleteOnSelected<String>
+                                        onSelected,
+                                        Iterable<String> options,
+                                      ) {
+                                        return Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Material(
+                                            elevation: 4.0,
+                                            child: SizedBox(
+                                              width: constraints.maxWidth,
+                                              child: ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                itemCount: options.length,
+                                                itemBuilder:
+                                                    (
+                                                      BuildContext context,
+                                                      int index,
+                                                    ) {
+                                                      final String option =
+                                                          options.elementAt(
+                                                            index,
+                                                          );
+                                                      return ListTile(
+                                                        title: Text(option),
+                                                        onTap: () {
+                                                          onSelected(option);
+                                                        },
+                                                      );
+                                                    },
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                 );
                               },
                             ),
@@ -267,75 +281,91 @@ class _CertificateFormState extends State<CertificateForm> {
                             child: LayoutBuilder(
                               builder: (context, constraints) {
                                 return Autocomplete<String>(
-                                  initialValue:
-                                      TextEditingValue(text: _frameCtrl.text),
+                                  initialValue: TextEditingValue(
+                                    text: _frameCtrl.text,
+                                  ),
                                   optionsBuilder:
                                       (TextEditingValue textEditingValue) {
-                                    if (textEditingValue.text == '') {
-                                      return const Iterable<String>.empty();
-                                    }
-                                    return kTechSuggestions.where((String option) {
-                                      return option.toLowerCase().contains(
+                                        if (textEditingValue.text == '') {
+                                          return const Iterable<String>.empty();
+                                        }
+                                        return kTechSuggestions.where((
+                                          String option,
+                                        ) {
+                                          return option.toLowerCase().contains(
                                             textEditingValue.text.toLowerCase(),
                                           );
-                                    });
-                                  },
+                                        });
+                                      },
                                   onSelected: (String selection) {
                                     _frameCtrl.text = selection;
                                   },
-                                  fieldViewBuilder: (
-                                    BuildContext context,
-                                    TextEditingController
+                                  fieldViewBuilder:
+                                      (
+                                        BuildContext context,
+                                        TextEditingController
                                         fieldTextEditingController,
-                                    FocusNode fieldFocusNode,
-                                    VoidCallback onFieldSubmitted,
-                                  ) {
-                                    return TextFormField(
-                                      controller: fieldTextEditingController,
-                                      focusNode: fieldFocusNode,
-                                      decoration: InputDecoration(
-                                        labelText: 'Framework',
-                                        prefixIcon: const Icon(Icons.layers),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.grey.shade50,
-                                      ),
-                                      onChanged: (val) => _frameCtrl.text = val,
-                                    );
-                                  },
-                                  optionsViewBuilder: (
-                                    BuildContext context,
-                                    AutocompleteOnSelected<String> onSelected,
-                                    Iterable<String> options,
-                                  ) {
-                                    return Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Material(
-                                        elevation: 4.0,
-                                        child: SizedBox(
-                                          width: constraints.maxWidth,
-                                          child: ListView.builder(
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            itemCount: options.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              final String option =
-                                                  options.elementAt(index);
-                                              return ListTile(
-                                                title: Text(option),
-                                                onTap: () {
-                                                  onSelected(option);
-                                                },
-                                              );
-                                            },
+                                        FocusNode fieldFocusNode,
+                                        VoidCallback onFieldSubmitted,
+                                      ) {
+                                        return TextFormField(
+                                          controller:
+                                              fieldTextEditingController,
+                                          focusNode: fieldFocusNode,
+                                          decoration: InputDecoration(
+                                            labelText: 'Framework',
+                                            prefixIcon: const Icon(
+                                              Icons.layers,
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.grey.shade50,
                                           ),
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                          onChanged: (val) =>
+                                              _frameCtrl.text = val,
+                                        );
+                                      },
+                                  optionsViewBuilder:
+                                      (
+                                        BuildContext context,
+                                        AutocompleteOnSelected<String>
+                                        onSelected,
+                                        Iterable<String> options,
+                                      ) {
+                                        return Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Material(
+                                            elevation: 4.0,
+                                            child: SizedBox(
+                                              width: constraints.maxWidth,
+                                              child: ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                itemCount: options.length,
+                                                itemBuilder:
+                                                    (
+                                                      BuildContext context,
+                                                      int index,
+                                                    ) {
+                                                      final String option =
+                                                          options.elementAt(
+                                                            index,
+                                                          );
+                                                      return ListTile(
+                                                        title: Text(option),
+                                                        onTap: () {
+                                                          onSelected(option);
+                                                        },
+                                                      );
+                                                    },
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                 );
                               },
                             ),
