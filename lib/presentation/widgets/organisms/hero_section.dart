@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/constants/app_constants.dart';
 import '../atoms/magnetic_element.dart';
 import '../atoms/social_button.dart';
+import '../atoms/typewriter_text.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -14,13 +15,11 @@ class HeroSection extends StatelessWidget {
     final isMobile = size.width < 800;
 
     return SizedBox(
-      // Aumentei a altura para caber mais ícones sem poluir
       height: isMobile ? 750 : 700,
       child: Stack(
         alignment: Alignment.center,
         children: [
           // === FUNDO COM ELEMENTOS FLUTUANTES (GRAVIDADE) ===
-          // Só mostramos a "galáxia" completa em telas maiores para não travar celulares antigos
           if (!isMobile) ...[
             // --- GRUPO 1: MOBILE (Esquerda Superior) ---
             const Positioned(
@@ -33,18 +32,6 @@ class HeroSection extends StatelessWidget {
                   size: 45,
                   color: Colors.blue,
                 ),
-              ),
-            ),
-            const Positioned(
-              top: 100,
-              left: 220,
-              child: MagneticElement(
-                strength: 1.1,
-                child: FaIcon(
-                  FontAwesomeIcons.swift,
-                  size: 35,
-                  color: Colors.deepOrange,
-                ), // Swift
               ),
             ),
             const Positioned(
@@ -104,7 +91,6 @@ class HeroSection extends StatelessWidget {
               left: 300,
               child: MagneticElement(
                 strength: 1.7,
-                // Representando Oracle/Postgres/SQL
                 child: FaIcon(
                   FontAwesomeIcons.database,
                   size: 35,
@@ -117,7 +103,6 @@ class HeroSection extends StatelessWidget {
               right: 100,
               child: MagneticElement(
                 strength: 0.8,
-                // Representando Supabase (Raio/Bolt é comum para tecnologias rápidas)
                 child: FaIcon(
                   FontAwesomeIcons.bolt,
                   size: 30,
@@ -178,7 +163,7 @@ class HeroSection extends StatelessWidget {
                     ],
                   ),
                   child: const CircleAvatar(
-                    radius: 90, // Levemente maior
+                    radius: 90,
                     backgroundImage: AssetImage(AppAssets.profileImage),
                     backgroundColor: Colors.white,
                   ),
@@ -202,21 +187,26 @@ class HeroSection extends StatelessWidget {
                   .shimmer(
                     duration: 3.seconds,
                     color: const Color(AppColors.primary).withOpacity(0.3),
-                  ) // Brilho passando
+                  )
                   .animate()
                   .fadeIn(duration: 800.ms),
 
               const SizedBox(height: 10),
 
-              Text(
-                AppStrings.role,
-                textAlign: TextAlign.center,
+              // Typewriter Effect for Role
+              TypewriterText(
+                texts: const [
+                  "MOBILE DEVELOPER (FLUTTER)",
+                  "FULLSTACK ENGINEER",
+                  "CREATIVE CODER",
+                  "TECH ENTHUSIAST"
+                ],
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   letterSpacing: 4,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-              ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.5, end: 0),
+              ),
 
               const SizedBox(height: 30),
 
