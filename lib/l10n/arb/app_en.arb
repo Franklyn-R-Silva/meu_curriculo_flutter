@@ -1,0 +1,7 @@
+{
+    "@@locale": "en",
+    "appTitle": "Franklyn Roberto - Portfolio",
+    "errorMessage": "Failed to load data. Check your connection.",
+    "adminModeDetected": "🕵️ Admin Mode Detected!",
+    "retry": "Retry"
+}

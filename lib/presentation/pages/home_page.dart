@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
+import 'package:meu_curriculo_flutter/l10n/arb/app_localizations.dart';
 import 'package:meu_curriculo_flutter/presentation/pages/admin/login_page.dart';
 import '../../../core/constants/app_constants.dart';
 import '../controllers/portfolio_controller.dart';
@@ -60,7 +61,9 @@ class _HomePageState extends State<HomePage> {
 
       // Feedback visual (opcional)
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('🕵️ Modo Admin Detectado!')),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.adminModeDetected),
+        ),
       );
 
       // Navega para o Login
@@ -93,14 +96,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          controller.errorMessage!,
+                          AppLocalizations.of(context)!.errorMessage,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 24),
                         ElevatedButton.icon(
                           onPressed: () => controller.loadAllData(),
                           icon: const Icon(Icons.refresh),
-                          label: const Text("Tentar Novamente"),
+                          label: Text(AppLocalizations.of(context)!.retry),
                         ),
                       ],
                     ),
