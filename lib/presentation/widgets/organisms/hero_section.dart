@@ -51,7 +51,18 @@ class HeroSection extends StatelessWidget {
                 ), // Android/Kotlin
               ),
             ),
-
+            const Positioned(
+              top: 260,
+              left: 150,
+              child: MagneticElement(
+                strength: 1.3,
+                child: FaIcon(
+                  FontAwesomeIcons.swift,
+                  size: 40,
+                  color: Colors.orange,
+                ), // Android/Kotlin
+              ),
+            ),
             // --- GRUPO 2: WEB & JS (Direita Superior) ---
             const Positioned(
               top: 60,
@@ -88,6 +99,18 @@ class HeroSection extends StatelessWidget {
                   FontAwesomeIcons.java,
                   size: 45,
                   color: Colors.orange,
+                ),
+              ),
+            ),
+            const Positioned(
+              bottom: 180,
+              left: 40,
+              child: MagneticElement(
+                strength: 1.2,
+                child: FaIcon(
+                  FontAwesomeIcons.windows,
+                  size: 45,
+                  color: Color.fromARGB(255, 0, 173, 253),
                 ),
               ),
             ),
@@ -130,7 +153,7 @@ class HeroSection extends StatelessWidget {
               ),
             ),
             const Positioned(
-              bottom: 160,
+              bottom: 130,
               right: 280,
               child: MagneticElement(
                 strength: 1.0,
@@ -139,6 +162,90 @@ class HeroSection extends StatelessWidget {
                   size: 35,
                   color: Colors.deepOrangeAccent,
                 ), // Git
+              ),
+            ),
+            const Positioned(
+              top: 350,
+              left: 60,
+              child: MagneticElement(
+                strength: 1.2,
+                child: FaIcon(
+                  FontAwesomeIcons.nodeJs,
+                  size: 38,
+                  color: Colors.greenAccent,
+                ),
+              ),
+            ),
+            const Positioned(
+              bottom: 40,
+              left: 200,
+              child: MagneticElement(
+                strength: 1.1,
+                child: FaIcon(
+                  FontAwesomeIcons.python,
+                  size: 38,
+                  color: Colors.yellow,
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 40,
+              right: 600,
+              child: MagneticElement(
+                strength: 0.7,
+                child: FaIcon(
+                  FontAwesomeIcons.js,
+                  size: 36,
+                  color: Colors.yellow,
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 200,
+              right: 700,
+              child: MagneticElement(
+                strength: 0.7,
+                child: FaIcon(
+                  FontAwesomeIcons.dartLang,
+                  size: 36,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 50,
+              right: 320,
+              child: MagneticElement(
+                strength: 0.9,
+                child: FaIcon(
+                  FontAwesomeIcons.html5,
+                  size: 40,
+                  color: Colors.orangeAccent,
+                ),
+              ),
+            ),
+            const Positioned(
+              bottom: 220,
+              right: 60,
+              child: MagneticElement(
+                strength: 1.0,
+                child: FaIcon(
+                  FontAwesomeIcons.linux,
+                  size: 34,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 370,
+              right: 90,
+              child: MagneticElement(
+                strength: 1.1,
+                child: FaIcon(
+                  FontAwesomeIcons.css3,
+                  size: 32,
+                  color: Colors.indigo,
+                ),
               ),
             ),
           ],
