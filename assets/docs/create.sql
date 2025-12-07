@@ -42,3 +42,5 @@ create policy "Qualquer um pode ler experiencias" on experiences for select usin
 
 alter table skills enable row level security;
 create policy "Qualquer um pode ler skills" on skills for select using (true);
+
+ALTER TABLE skills ADD COLUMN icon_url text;
