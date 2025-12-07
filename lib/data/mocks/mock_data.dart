@@ -113,17 +113,28 @@ class MockData {
       title: 'Flutter & Dart - The Complete Guide',
       issuer: 'Udemy',
       date: '2024',
+      description: 'Complete guide to Flutter and Dart development',
+      language: 'Dart',
+      framework: 'Flutter',
       credentialUrl: 'https://www.udemy.com/certificate/UC-XXXXX/',
     ),
     CertificateModel(
       title: 'Clean Architecture em Flutter',
       issuer: 'Udemy',
       date: '2024',
+      description: 'Clean Architecture principles applied to Flutter',
+      language: 'Dart',
+      framework: 'Flutter',
+      credentialUrl: '',
     ),
     CertificateModel(
       title: 'Ignite - React Native',
       issuer: 'Rocketseat',
       date: '2023',
+      description: 'React Native development with Ignite',
+      language: 'Typescript',
+      framework: 'React Native',
+      credentialUrl: '',
     ),
   ];
 }

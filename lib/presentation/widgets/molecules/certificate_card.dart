@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../../../core/utils/app_utils.dart';
 import '../../../data/models/certificate_model.dart';
+import '../atoms/tech_chip.dart';
 
-class CertificateCard extends StatelessWidget {
+class CertificateCard extends StatefulWidget {
   final CertificateModel certificate;
 
   const CertificateCard({super.key, required this.certificate});
 
-  Future<void> _launchUrl() async {
-    if (certificate.credentialUrl != null) {
-      final Uri uri = Uri.parse(certificate.credentialUrl!);
-      if (!await launchUrl(uri)) {
-        debugPrint('Could not launch ${certificate.credentialUrl}');
-      }
-    }
+  @override
+  State<CertificateCard> createState() => _CertificateCardState();
+}
+
+class _CertificateCardState extends State<CertificateCard> {
+  final ValueNotifier<Offset> _mousePos = ValueNotifier(Offset.zero);
+  final ValueNotifier<bool> _isHovered = ValueNotifier(false);
+
+  @override
+  void dispose() {
+    _mousePos.dispose();
+    _isHovered.dispose();
+    super.dispose();
   }
 
   @override
@@ -22,77 +28,225 @@ class CertificateCard extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-        border: Border.all(
-          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                FontAwesomeIcons.certificate,
-                color: theme.colorScheme.primary,
-                size: 20,
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  certificate.title,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+    return MouseRegion(
+      onEnter: (_) => _isHovered.value = true,
+      onExit: (_) {
+        _isHovered.value = false;
+        _mousePos.value = Offset.zero;
+      },
+      onHover: (details) {
+        final renderBox = context.findRenderObject() as RenderBox;
+        final size = renderBox.size;
+        final center = Offset(size.width / 2, size.height / 2);
+        _mousePos.value = details.localPosition - center;
+      },
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_mousePos, _isHovered]),
+        builder: (context, child) {
+          final hovered = _isHovered.value;
+          final mouse = _mousePos.value;
+
+          // Transformação Matrix4 para o efeito 3D
+          final transform = Matrix4.identity()
+            ..setEntry(3, 2, 0.001) // Perspectiva
+            ..rotateX(hovered ? 0.001 * mouse.dy : 0)
+            ..rotateY(hovered ? -0.001 * mouse.dx : 0);
+
+          return Transform(
+            transform: transform,
+            alignment: Alignment.center,
+            child: Container(
+              width: 320, // Largura fixa ideal para carrossel
+              margin: const EdgeInsets.only(right: 16, bottom: 16),
+              decoration: BoxDecoration(
+                color: theme.cardTheme.color,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: isDark
+                      ? Colors.white10
+                      : Colors.grey.withValues(alpha: 0.2),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: hovered
+                        ? theme.colorScheme.primary.withValues(alpha: 0.3)
+                        : Colors.black.withValues(alpha: 0.05),
+                    blurRadius: hovered ? 20 : 10,
+                    offset: hovered ? const Offset(0, 10) : const Offset(0, 4),
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            certificate.issuer,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.8),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            certificate.date,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.6),
-            ),
-          ),
-          if (certificate.credentialUrl != null) ...[
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: _launchUrl,
-                icon: const Icon(Icons.open_in_new, size: 16),
-                label: const Text('Ver Credencial'),
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  side: BorderSide(color: theme.colorScheme.primary),
-                ),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // --- CABEÇALHO ---
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Ícone estilizado
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.primaryContainer
+                                    .withValues(alpha: 0.3),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Icon(
+                                Icons.workspace_premium,
+                                color: theme.colorScheme.primary,
+                                size: 24,
+                              ),
+                            ),
+                            // Botão de Download/Link
+                            if (widget.certificate.credentialUrl.isNotEmpty)
+                              IconButton(
+                                onPressed: () => AppUtils.launchURL(
+                                  widget.certificate.credentialUrl,
+                                  context: context,
+                                ),
+                                icon: const Icon(
+                                  Icons.open_in_new_rounded,
+                                  size: 20,
+                                ),
+                                tooltip: "Ver Certificado",
+                                style: IconButton.styleFrom(
+                                  foregroundColor: theme.colorScheme.primary,
+                                ),
+                              ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // --- TÍTULO ---
+                        Text(
+                          widget.certificate.title,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            height: 1.2,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+
+                        const SizedBox(height: 6),
+
+                        // --- EMISSOR • DATA ---
+                        Row(
+                          children: [
+                            Text(
+                              widget.certificate.issuer,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: theme.colorScheme.primary,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                              ),
+                              child: Text(
+                                "•",
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              widget.certificate.date,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        // --- DESCRIÇÃO ---
+                        Expanded(
+                          child: Text(
+                            widget.certificate.description,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: isDark
+                                  ? Colors.grey[400]
+                                  : Colors.grey[700],
+                              height: 1.4,
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // --- TAGS (CHIPS) ---
+                        if (widget.certificate.language.isNotEmpty ||
+                            widget.certificate.framework.isNotEmpty)
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              if (widget.certificate.language.isNotEmpty)
+                                TechChip(
+                                  label: widget.certificate.language,
+                                  isHighlight: false,
+                                ),
+                              if (widget.certificate.framework.isNotEmpty)
+                                TechChip(
+                                  label: widget.certificate.framework,
+                                  isHighlight: true,
+                                ),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
+
+                  // Efeito de Brilho (Gradient Overlay) ao passar o mouse
+                  if (hovered)
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.white.withValues(
+                                alpha: isDark ? 0.1 : 0.4,
+                              ),
+                              Colors.transparent,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            stops: const [0.0, 0.4],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  // Link Clicável
+                  if (widget.certificate.credentialUrl.isNotEmpty)
+                    Positioned.fill(
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(16),
+                          onTap: () => AppUtils.launchURL(
+                            widget.certificate.credentialUrl,
+                            context: context,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
-          ] else ...[
-            const Spacer(),
-          ],
-        ],
+          );
+        },
       ),
     );
   }
