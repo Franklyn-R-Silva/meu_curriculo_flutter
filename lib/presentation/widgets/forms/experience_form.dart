@@ -26,9 +26,13 @@ class _ExperienceFormState extends State<ExperienceForm> {
   void initState() {
     super.initState();
     _roleCtrl = TextEditingController(text: widget.experience?.role ?? '');
-    _companyCtrl = TextEditingController(text: widget.experience?.company ?? '');
+    _companyCtrl = TextEditingController(
+      text: widget.experience?.company ?? '',
+    );
     _periodCtrl = TextEditingController(text: widget.experience?.period ?? '');
-    _descCtrl = TextEditingController(text: widget.experience?.description ?? '');
+    _descCtrl = TextEditingController(
+      text: widget.experience?.description ?? '',
+    );
     _isCurrent = widget.experience?.isCurrent ?? false;
   }
 
@@ -62,7 +66,11 @@ class _ExperienceFormState extends State<ExperienceForm> {
       if (widget.experience == null) {
         await auth.repository.createItem('experiences', model.toMap());
       } else {
-        await auth.repository.updateItem('experiences', widget.experience!.id!, model.toMap());
+        await auth.repository.updateItem(
+          'experiences',
+          widget.experience!.id!,
+          model.toMap(),
+        );
       }
 
       if (mounted) {
@@ -74,9 +82,9 @@ class _ExperienceFormState extends State<ExperienceForm> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao salvar: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erro ao salvar: $e')));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -86,7 +94,9 @@ class _ExperienceFormState extends State<ExperienceForm> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.experience == null ? 'Nova Experiência' : 'Editar Experiência'),
+      title: Text(
+        widget.experience == null ? 'Nova Experiência' : 'Editar Experiência',
+      ),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -105,7 +115,9 @@ class _ExperienceFormState extends State<ExperienceForm> {
               ),
               TextFormField(
                 controller: _periodCtrl,
-                decoration: const InputDecoration(labelText: 'Período (Ex: Jan 2023 - Atual) *'),
+                decoration: const InputDecoration(
+                  labelText: 'Período (Ex: Jan 2023 - Atual) *',
+                ),
                 validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
               ),
               TextFormField(
@@ -130,10 +142,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
         ),
         _isLoading
             ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: _save,
-                child: const Text('Salvar'),
-              ),
+            : ElevatedButton(onPressed: _save, child: const Text('Salvar')),
       ],
     );
   }

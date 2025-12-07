@@ -57,7 +57,11 @@ class _SkillFormState extends State<SkillForm> {
       if (widget.skill == null) {
         await auth.repository.createItem('skills', model.toMap());
       } else {
-        await auth.repository.updateItem('skills', widget.skill!.id!, model.toMap());
+        await auth.repository.updateItem(
+          'skills',
+          widget.skill!.id!,
+          model.toMap(),
+        );
       }
 
       if (mounted) {
@@ -69,9 +73,9 @@ class _SkillFormState extends State<SkillForm> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao salvar: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erro ao salvar: $e')));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -95,7 +99,9 @@ class _SkillFormState extends State<SkillForm> {
               ),
               TextFormField(
                 controller: _iconCtrl,
-                decoration: const InputDecoration(labelText: 'Caminho do Ícone (Asset)'),
+                decoration: const InputDecoration(
+                  labelText: 'Caminho do Ícone (Asset)',
+                ),
               ),
               DropdownButtonFormField<SkillType>(
                 value: _type,
@@ -126,10 +132,7 @@ class _SkillFormState extends State<SkillForm> {
         ),
         _isLoading
             ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: _save,
-                child: const Text('Salvar'),
-              ),
+            : ElevatedButton(onPressed: _save, child: const Text('Salvar')),
       ],
     );
   }

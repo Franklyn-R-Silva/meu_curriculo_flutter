@@ -28,10 +28,16 @@ class _CertificateFormState extends State<CertificateForm> {
   void initState() {
     super.initState();
     _titleCtrl = TextEditingController(text: widget.certificate?.title ?? '');
-    _descCtrl = TextEditingController(text: widget.certificate?.description ?? '');
-    _credUrlCtrl = TextEditingController(text: widget.certificate?.credentialUrl ?? '');
+    _descCtrl = TextEditingController(
+      text: widget.certificate?.description ?? '',
+    );
+    _credUrlCtrl = TextEditingController(
+      text: widget.certificate?.credentialUrl ?? '',
+    );
     _langCtrl = TextEditingController(text: widget.certificate?.language ?? '');
-    _frameCtrl = TextEditingController(text: widget.certificate?.framework ?? '');
+    _frameCtrl = TextEditingController(
+      text: widget.certificate?.framework ?? '',
+    );
     _issuerCtrl = TextEditingController(text: widget.certificate?.issuer ?? '');
     _dateCtrl = TextEditingController(text: widget.certificate?.date ?? '');
   }
@@ -71,7 +77,11 @@ class _CertificateFormState extends State<CertificateForm> {
       if (widget.certificate == null) {
         await auth.repository.createItem('certificates', model.toMap());
       } else {
-        await auth.repository.updateItem('certificates', widget.certificate!.id!, model.toMap());
+        await auth.repository.updateItem(
+          'certificates',
+          widget.certificate!.id!,
+          model.toMap(),
+        );
       }
 
       if (mounted) {
@@ -83,9 +93,9 @@ class _CertificateFormState extends State<CertificateForm> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao salvar: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erro ao salvar: $e')));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -95,7 +105,9 @@ class _CertificateFormState extends State<CertificateForm> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.certificate == null ? 'Novo Certificado' : 'Editar Certificado'),
+      title: Text(
+        widget.certificate == null ? 'Novo Certificado' : 'Editar Certificado',
+      ),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -114,7 +126,9 @@ class _CertificateFormState extends State<CertificateForm> {
               ),
               TextFormField(
                 controller: _dateCtrl,
-                decoration: const InputDecoration(labelText: 'Data de Emissão *'),
+                decoration: const InputDecoration(
+                  labelText: 'Data de Emissão *',
+                ),
                 validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
               ),
               TextFormField(
@@ -125,16 +139,22 @@ class _CertificateFormState extends State<CertificateForm> {
               ),
               TextFormField(
                 controller: _credUrlCtrl,
-                decoration: const InputDecoration(labelText: 'URL da Credencial *'),
+                decoration: const InputDecoration(
+                  labelText: 'URL da Credencial *',
+                ),
                 validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
               ),
               TextFormField(
                 controller: _langCtrl,
-                decoration: const InputDecoration(labelText: 'Linguagem (Opcional)'),
+                decoration: const InputDecoration(
+                  labelText: 'Linguagem (Opcional)',
+                ),
               ),
               TextFormField(
                 controller: _frameCtrl,
-                decoration: const InputDecoration(labelText: 'Framework (Opcional)'),
+                decoration: const InputDecoration(
+                  labelText: 'Framework (Opcional)',
+                ),
               ),
             ],
           ),
@@ -147,10 +167,7 @@ class _CertificateFormState extends State<CertificateForm> {
         ),
         _isLoading
             ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: _save,
-                child: const Text('Salvar'),
-              ),
+            : ElevatedButton(onPressed: _save, child: const Text('Salvar')),
       ],
     );
   }

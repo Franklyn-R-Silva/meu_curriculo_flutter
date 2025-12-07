@@ -31,8 +31,9 @@ class _ProjectFormState extends State<ProjectForm> {
     _repoCtrl = TextEditingController(text: widget.project?.repoUrl ?? '');
     _liveCtrl = TextEditingController(text: widget.project?.liveUrl ?? '');
     _imgCtrl = TextEditingController(text: widget.project?.imageUrl ?? '');
-    _techCtrl =
-        TextEditingController(text: widget.project?.techStack.join(', ') ?? '');
+    _techCtrl = TextEditingController(
+      text: widget.project?.techStack.join(', ') ?? '',
+    );
   }
 
   @override
@@ -51,8 +52,11 @@ class _ProjectFormState extends State<ProjectForm> {
 
     setState(() => _isLoading = true);
 
-    final techStack =
-        _techCtrl.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+    final techStack = _techCtrl.text
+        .split(',')
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
 
     final model = ProjectModel(
       id: widget.project?.id,
@@ -71,7 +75,11 @@ class _ProjectFormState extends State<ProjectForm> {
       if (widget.project == null) {
         await auth.repository.createItem('projects', model.toMap());
       } else {
-        await auth.repository.updateItem('projects', widget.project!.id!, model.toMap());
+        await auth.repository.updateItem(
+          'projects',
+          widget.project!.id!,
+          model.toMap(),
+        );
       }
 
       if (mounted) {
@@ -83,9 +91,9 @@ class _ProjectFormState extends State<ProjectForm> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao salvar: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erro ao salvar: $e')));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -123,16 +131,22 @@ class _ProjectFormState extends State<ProjectForm> {
               ),
               TextFormField(
                 controller: _repoCtrl,
-                decoration: const InputDecoration(labelText: 'URL do Repositório *'),
+                decoration: const InputDecoration(
+                  labelText: 'URL do Repositório *',
+                ),
                 validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
               ),
               TextFormField(
                 controller: _liveCtrl,
-                decoration: const InputDecoration(labelText: 'URL do Deploy (Opcional)'),
+                decoration: const InputDecoration(
+                  labelText: 'URL do Deploy (Opcional)',
+                ),
               ),
               TextFormField(
                 controller: _imgCtrl,
-                decoration: const InputDecoration(labelText: 'URL da Imagem (Opcional)'),
+                decoration: const InputDecoration(
+                  labelText: 'URL da Imagem (Opcional)',
+                ),
               ),
             ],
           ),
@@ -145,10 +159,7 @@ class _ProjectFormState extends State<ProjectForm> {
         ),
         _isLoading
             ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: _save,
-                child: const Text('Salvar'),
-              ),
+            : ElevatedButton(onPressed: _save, child: const Text('Salvar')),
       ],
     );
   }
