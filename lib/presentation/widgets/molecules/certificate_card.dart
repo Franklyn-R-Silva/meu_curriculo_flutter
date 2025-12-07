@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../data/models/certificate_model.dart';
 import '../atoms/tech_chip.dart';
@@ -63,13 +62,15 @@ class _CertificateCardState extends State<CertificateCard> {
                 color: theme.cardTheme.color,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: isDark ? Colors.white10 : Colors.grey.withOpacity(0.2),
+                  color: isDark
+                      ? Colors.white10
+                      : Colors.grey.withValues(alpha: 0.2),
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: hovered
-                        ? theme.colorScheme.primary.withOpacity(0.3)
-                        : Colors.black.withOpacity(0.05),
+                        ? theme.colorScheme.primary.withValues(alpha: 0.3)
+                        : Colors.black.withValues(alpha: 0.05),
                     blurRadius: hovered ? 20 : 10,
                     offset: hovered ? const Offset(0, 10) : const Offset(0, 4),
                   ),
@@ -91,7 +92,7 @@ class _CertificateCardState extends State<CertificateCard> {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: theme.colorScheme.primaryContainer
-                                    .withOpacity(0.3),
+                                    .withValues(alpha: 0.3),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Icon(
@@ -214,7 +215,9 @@ class _CertificateCardState extends State<CertificateCard> {
                           borderRadius: BorderRadius.circular(16),
                           gradient: LinearGradient(
                             colors: [
-                              Colors.white.withOpacity(isDark ? 0.1 : 0.4),
+                              Colors.white.withValues(
+                                alpha: isDark ? 0.1 : 0.4,
+                              ),
                               Colors.transparent,
                             ],
                             begin: Alignment.topLeft,
