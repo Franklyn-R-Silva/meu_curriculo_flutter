@@ -1,5 +1,6 @@
-import '../models/project_model.dart';
+// Project imports:
 import '../models/experience_model.dart';
+import '../models/project_model.dart';
 import '../models/skill_model.dart';
 
 class MockData {

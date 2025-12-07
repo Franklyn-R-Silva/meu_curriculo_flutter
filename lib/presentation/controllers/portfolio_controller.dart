@@ -1,6 +1,9 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import '../../data/models/project_model.dart';
+
+// Project imports:
 import '../../data/models/experience_model.dart';
+import '../../data/models/project_model.dart';
 import '../../data/models/skill_model.dart';
 import '../../data/repositories/portfolio_repository.dart';
 

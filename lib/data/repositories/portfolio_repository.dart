@@ -1,7 +1,8 @@
-import '../models/project_model.dart';
-import '../models/experience_model.dart';
-import '../models/skill_model.dart';
+// Project imports:
 import '../mocks/mock_data.dart';
+import '../models/experience_model.dart';
+import '../models/project_model.dart';
+import '../models/skill_model.dart';
 
 abstract class IPortfolioRepository {
   Future<List<ProjectModel>> getProjects();

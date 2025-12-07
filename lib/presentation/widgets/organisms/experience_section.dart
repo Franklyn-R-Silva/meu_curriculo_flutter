@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_animate/flutter_animate.dart';
+
+// Project imports:
 import '../../../data/models/experience_model.dart';
 import '../molecules/experience_card.dart';
 

@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../data/models/project_model.dart';
+
+// Project imports:
 import '../../../core/constants/app_constants.dart';
+import '../../../data/models/project_model.dart';
 import '../atoms/tech_chip.dart';
 
 class ProjectCard extends StatefulWidget {

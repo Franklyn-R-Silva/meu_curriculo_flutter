@@ -1,13 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
 import '../../../core/constants/app_constants.dart';
 import '../controllers/portfolio_controller.dart';
-import '../widgets/organisms/hero_section.dart';
-import '../widgets/organisms/skills_section.dart';
 import '../widgets/organisms/experience_section.dart';
-import '../widgets/organisms/projects_section.dart';
 import '../widgets/organisms/glass_header.dart';
+import '../widgets/organisms/hero_section.dart';
+import '../widgets/organisms/projects_section.dart';
+import '../widgets/organisms/skills_section.dart';
+
 import '../widgets/atoms/background_pattern.dart'; // Importe a textura
 
 class HomePage extends StatefulWidget {

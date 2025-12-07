@@ -1,7 +1,14 @@
+// Dart imports:
 import 'dart:ui';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+
+// Project imports:
 import '../../../core/constants/app_constants.dart';
 import '../../controllers/portfolio_controller.dart';
 
