@@ -84,56 +84,146 @@ class _SkillFormState extends State<SkillForm> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(widget.skill == null ? 'Nova Skill' : 'Editar Skill'),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                controller: _nameCtrl,
-                decoration: const InputDecoration(labelText: 'Nome *'),
-                validator: (v) => v?.isEmpty == true ? 'Obrigatório' : null,
-              ),
-              TextFormField(
-                controller: _iconCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Caminho do Ícone (Asset)',
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 500),
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.skill == null ? 'Nova Skill' : 'Editar Skill',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close),
+                ),
+              ],
+            ),
+            const Divider(),
+            const SizedBox(height: 16),
+            Flexible(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      _buildTextField(
+                        controller: _nameCtrl,
+                        label: 'Nome',
+                        icon: Icons.label,
+                        required: true,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        controller: _iconCtrl,
+                        label: 'Caminho do Ícone (Asset)',
+                        icon: Icons.image,
+                      ),
+                      const SizedBox(height: 16),
+                      DropdownButtonFormField<SkillType>(
+                        value: _type,
+                        decoration: InputDecoration(
+                          labelText: 'Tipo',
+                          prefixIcon: const Icon(Icons.category),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey.shade50,
+                        ),
+                        items:
+                            SkillType.values.map((t) {
+                              return DropdownMenuItem(
+                                value: t,
+                                child: Text(t.name.toUpperCase()),
+                              );
+                            }).toList(),
+                        onChanged: (val) {
+                          if (val != null) setState(() => _type = val);
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      SwitchListTile(
+                        title: const Text('Destaque?'),
+                        secondary: const Icon(Icons.star),
+                        value: _isHighlight,
+                        onChanged: (val) => setState(() => _isHighlight = val),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: BorderSide(color: Colors.grey.shade300),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              DropdownButtonFormField<SkillType>(
-                value: _type,
-                decoration: const InputDecoration(labelText: 'Tipo'),
-                items: SkillType.values.map((t) {
-                  return DropdownMenuItem(
-                    value: t,
-                    child: Text(t.name.toUpperCase()),
-                  );
-                }).toList(),
-                onChanged: (val) {
-                  if (val != null) setState(() => _type = val);
-                },
-              ),
-              SwitchListTile(
-                title: const Text('Destaque?'),
-                value: _isHighlight,
-                onChanged: (val) => setState(() => _isHighlight = val),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancelar'),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton.icon(
+                  onPressed: _isLoading ? null : _save,
+                  icon: _isLoading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Icon(Icons.save),
+                  label: const Text('Salvar'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
-        ),
-        _isLoading
-            ? const CircularProgressIndicator()
-            : ElevatedButton(onPressed: _save, child: const Text('Salvar')),
-      ],
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required IconData icon,
+    String? hint,
+    bool required = false,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: required ? '$label *' : label,
+        hintText: hint,
+        prefixIcon: Icon(icon),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        filled: true,
+        fillColor: Colors.grey.shade50,
+      ),
+      validator:
+          required ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null : null,
     );
   }
 }
