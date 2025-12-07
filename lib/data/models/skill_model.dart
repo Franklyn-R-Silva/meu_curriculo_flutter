@@ -24,4 +24,15 @@ class SkillModel {
       ),
     );
   }
+
+  Map<String, dynamic> toJson() => toMap();
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'icon_asset': iconAsset,
+      'is_highlight': isHighlight,
+      'type': type.name,
+    };
+  }
 }

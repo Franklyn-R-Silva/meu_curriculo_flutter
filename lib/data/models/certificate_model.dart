@@ -30,4 +30,18 @@ class CertificateModel {
           map['date_issued'] ?? '', // Note que no banco chamei de 'date_issued'
     );
   }
+
+  Map<String, dynamic> toJson() => toMap();
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'credential_url': credentialUrl,
+      'language': language,
+      'framework': framework,
+      'issuer': issuer,
+      'date_issued': date,
+    };
+  }
 }

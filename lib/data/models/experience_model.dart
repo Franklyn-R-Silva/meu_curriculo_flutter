@@ -22,4 +22,16 @@ class ExperienceModel {
       isCurrent: map['is_current'] ?? false,
     );
   }
+
+  Map<String, dynamic> toJson() => toMap();
+
+  Map<String, dynamic> toMap() {
+    return {
+      'role': role,
+      'company': company,
+      'period': period,
+      'description': description,
+      'is_current': isCurrent,
+    };
+  }
 }

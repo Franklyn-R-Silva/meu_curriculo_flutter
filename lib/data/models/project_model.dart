@@ -29,6 +29,8 @@ class ProjectModel {
     );
   }
 
+  Map<String, dynamic> toJson() => toMap();
+
   // Método para Enviar ao Banco
   Map<String, dynamic> toMap() {
     return {
