@@ -52,26 +52,30 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
                     curve: Curves.easeOut,
                     top: -100 - moveY,
                     left: -100 - moveX,
-                    child: ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
-                      child: Container(
-                        width: 400,
-                        height: 400,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.purple.withOpacity(0.15),
-                        ),
-                      ),
-                    )
-                        .animate(
-                          onPlay: (controller) =>
-                              controller.repeat(reverse: true),
-                        )
-                        .scale(
-                          begin: const Offset(1, 1),
-                          end: const Offset(1.5, 1.5),
-                          duration: 4.seconds,
-                        ),
+                    child:
+                        ImageFiltered(
+                              imageFilter: ImageFilter.blur(
+                                sigmaX: 80,
+                                sigmaY: 80,
+                              ),
+                              child: Container(
+                                width: 400,
+                                height: 400,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.purple.withOpacity(0.15),
+                                ),
+                              ),
+                            )
+                            .animate(
+                              onPlay: (controller) =>
+                                  controller.repeat(reverse: true),
+                            )
+                            .scale(
+                              begin: const Offset(1, 1),
+                              end: const Offset(1.5, 1.5),
+                              duration: 4.seconds,
+                            ),
                   ),
 
                   // Blob 2 (Azul)
@@ -80,26 +84,30 @@ class _BackgroundPatternState extends State<BackgroundPattern> {
                     curve: Curves.easeOut,
                     bottom: -50 + moveY,
                     right: -50 + moveX,
-                    child: ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 80, sigmaY: 80),
-                      child: Container(
-                        width: 300,
-                        height: 300,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.blue.withOpacity(0.15),
-                        ),
-                      ),
-                    )
-                        .animate(
-                          onPlay: (controller) =>
-                              controller.repeat(reverse: true),
-                        )
-                        .scale(
-                          begin: const Offset(1, 1),
-                          end: const Offset(1.2, 1.2),
-                          duration: 3.seconds,
-                        ),
+                    child:
+                        ImageFiltered(
+                              imageFilter: ImageFilter.blur(
+                                sigmaX: 80,
+                                sigmaY: 80,
+                              ),
+                              child: Container(
+                                width: 300,
+                                height: 300,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.blue.withOpacity(0.15),
+                                ),
+                              ),
+                            )
+                            .animate(
+                              onPlay: (controller) =>
+                                  controller.repeat(reverse: true),
+                            )
+                            .scale(
+                              begin: const Offset(1, 1),
+                              end: const Offset(1.2, 1.2),
+                              duration: 3.seconds,
+                            ),
                   ),
                 ],
               );

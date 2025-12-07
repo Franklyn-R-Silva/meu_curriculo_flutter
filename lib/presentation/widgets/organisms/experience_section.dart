@@ -34,12 +34,13 @@ class ExperienceSection extends StatelessWidget {
               left: 0,
               top: 10,
               bottom: 0,
-              child: Container(
-                width: 2,
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-              )
-                  .animate()
-                  .scaleY(
+              child:
+                  Container(
+                    width: 2,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.3),
+                  ).animate().scaleY(
                     begin: 0,
                     end: 1,
                     duration: 1.5.seconds,
@@ -63,29 +64,34 @@ class ExperienceSection extends StatelessWidget {
                       Positioned(
                         left: -29,
                         top: 0,
-                        child: Container(
-                          width: 12,
-                          height: 12,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              width: 2,
-                            ),
-                          ),
-                        )
-                            .animate(delay: (index * 200 + 500).ms)
-                            .scale(duration: 300.ms, curve: Curves.easeOutBack),
+                        child:
+                            Container(
+                                  width: 12,
+                                  height: 12,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Theme.of(
+                                        context,
+                                      ).scaffoldBackgroundColor,
+                                      width: 2,
+                                    ),
+                                  ),
+                                )
+                                .animate(delay: (index * 200 + 500).ms)
+                                .scale(
+                                  duration: 300.ms,
+                                  curve: Curves.easeOutBack,
+                                ),
                       ),
 
                       // Card
                       ExperienceCard(experience: experiences[index])
                           .animate()
-                          .fadeIn(
-                            delay: (index * 200).ms,
-                            duration: 600.ms,
-                          )
+                          .fadeIn(delay: (index * 200).ms, duration: 600.ms)
                           .slideX(begin: 0.1, end: 0),
                     ],
                   ),

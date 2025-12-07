@@ -179,15 +179,15 @@ class HeroSection extends StatelessWidget {
 
               // Nome com Efeito de Cor e Glitch
               Text(
-                AppStrings.portfolioTitle.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  fontWeight: FontWeight.w900,
-                  fontSize: isMobile ? 40 : 72,
-                  height: 0.9,
-                  letterSpacing: -2,
-                ),
-              )
+                    AppStrings.portfolioTitle.toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                      fontWeight: FontWeight.w900,
+                      fontSize: isMobile ? 40 : 72,
+                      height: 0.9,
+                      letterSpacing: -2,
+                    ),
+                  )
                   .animate()
                   .fadeIn(duration: 800.ms)
                   .slideY(begin: 0.2, end: 0)
