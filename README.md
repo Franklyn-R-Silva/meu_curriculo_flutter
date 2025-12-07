@@ -105,12 +105,3 @@ flutter build web --release --base-href "/meu_curriculo_flutter/"
 ---
 
 Desenvolvido com 💙 e Flutter.
-
-```
-
-### Por que esse README é bom?
-1.  **Badges:** Dão um ar técnico imediato.
-2.  **Destaques Técnicos:** Explica *o que* você fez de diferente (Física, 3D, Glassmorphism). Isso mostra que você não apenas copiou um template.
-3.  **Árvore de Arquivos:** Mostra que você sabe organizar código (senioridade).
-4.  **Instruções Claras:** Qualquer pessoa consegue baixar e rodar.
-```
