@@ -145,8 +145,9 @@ class _CertificateCardState extends State<CertificateCard> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 6),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                              ),
                               child: Text(
                                 "•",
                                 style: theme.textTheme.bodySmall?.copyWith(
@@ -170,8 +171,9 @@ class _CertificateCardState extends State<CertificateCard> {
                           child: Text(
                             widget.certificate.description,
                             style: theme.textTheme.bodySmall?.copyWith(
-                              color:
-                                  isDark ? Colors.grey[400] : Colors.grey[700],
+                              color: isDark
+                                  ? Colors.grey[400]
+                                  : Colors.grey[700],
                               height: 1.4,
                             ),
                             maxLines: 3,
@@ -218,6 +220,21 @@ class _CertificateCardState extends State<CertificateCard> {
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             stops: const [0.0, 0.4],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  // Link Clicável
+                  if (widget.certificate.credentialUrl.isNotEmpty)
+                    Positioned.fill(
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(16),
+                          onTap: () => AppUtils.launchURL(
+                            widget.certificate.credentialUrl,
+                            context: context,
                           ),
                         ),
                       ),
