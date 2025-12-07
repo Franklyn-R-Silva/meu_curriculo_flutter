@@ -1,4 +1,5 @@
 class CertificateModel {
+  final int? id;
   final String title;
   final String description;
   final String credentialUrl;
@@ -8,6 +9,7 @@ class CertificateModel {
   final String date; // Novo
 
   const CertificateModel({
+    this.id,
     required this.title,
     required this.description,
     required this.credentialUrl,
@@ -19,6 +21,7 @@ class CertificateModel {
 
   factory CertificateModel.fromMap(Map<String, dynamic> map) {
     return CertificateModel(
+      id: map['id'],
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       credentialUrl: map['credential_url'] ?? '',
@@ -35,6 +38,7 @@ class CertificateModel {
 
   Map<String, dynamic> toMap() {
     return {
+      if (id != null) 'id': id,
       'title': title,
       'description': description,
       'credential_url': credentialUrl,
