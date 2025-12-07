@@ -4,11 +4,22 @@ import '../models/project_model.dart';
 import '../models/skill_model.dart';
 
 class MockData {
-  // ... (Mantenha as experiências e projetos como estavam ou atualize se quiser) ...
-  // Vou focar na atualização das SKILLS abaixo:
-
+  // --- EXPERIÊNCIAS, PROJETOS E SKILLS ATUALIZADOS ---
   static const List<ExperienceModel> experiences = [
-    // ... (Copie suas experiências antigas aqui)
+    ExperienceModel(
+      role: 'Desenvolvedor Mobile',
+      company: 'NWERP',
+      period: 'Out 2025 - Atualmente',
+      description:
+          'Criação de um sistema abrangente de gestão de vendas B2B e pré-faturamento construído com Flutter e Supabase. Esta aplicação web e mobile agiliza a gestão de clientes, navegação no catálogo de produtos e processamento de pedidos para equipes de vendas.',
+    ),
+    ExperienceModel(
+      role: 'Analista de sistemas',
+      company: 'Grupo Coagro',
+      period: 'Jul 2024 - Atualmente',
+      description:
+          'Desenvolvedor Mobile (Flutter) e de APIs (Node.js/TS), com foco na otimização de Logística (endereçamento/etiquetas), Vendas (CRM de Campo, faturamento de NFs e apps de loja) e na gestão operacional de sistemas críticos, possuindo experiência com WinThor e Oracle DB.',
+    ),
     ExperienceModel(
       role: 'Desenvolvedor Fullstack',
       company: 'Plussoft',
@@ -71,13 +82,13 @@ class MockData {
     SkillModel(name: 'Android Studio', type: SkillType.mobile),
 
     // 💻 WEB, BACKEND & DESKTOP
-    SkillModel(name: 'Node.js', type: SkillType.web),
+    SkillModel(name: 'Node.js', type: SkillType.web, isHighlight: true),
     SkillModel(name: 'TypeScript', type: SkillType.web, isHighlight: true),
     SkillModel(name: 'JavaScript', type: SkillType.web),
     SkillModel(name: 'Electron', type: SkillType.web),
-    SkillModel(name: 'Spring Boot', type: SkillType.web, isHighlight: true),
+    SkillModel(name: 'Spring Boot', type: SkillType.web),
     SkillModel(name: 'Docker', type: SkillType.web, isHighlight: true),
-    SkillModel(name: 'Oracle', type: SkillType.web),
+    SkillModel(name: 'Oracle', type: SkillType.web, isHighlight: true),
     SkillModel(name: 'PostgreSQL', type: SkillType.web),
     SkillModel(name: 'MySQL', type: SkillType.web),
     SkillModel(name: 'HTML5 & CSS3', type: SkillType.web),
@@ -85,8 +96,8 @@ class MockData {
     SkillModel(name: 'Bootstrap', type: SkillType.web),
 
     // ⚙️ TOOLS
-    SkillModel(name: 'Git', type: SkillType.tools),
-    SkillModel(name: 'GitHub', type: SkillType.tools),
+    SkillModel(name: 'Git', type: SkillType.tools, isHighlight: true),
+    SkillModel(name: 'GitHub', type: SkillType.tools, isHighlight: true),
     SkillModel(name: 'VS Code', type: SkillType.tools),
     SkillModel(name: 'Postman', type: SkillType.tools),
     SkillModel(name: 'Figma', type: SkillType.tools),
