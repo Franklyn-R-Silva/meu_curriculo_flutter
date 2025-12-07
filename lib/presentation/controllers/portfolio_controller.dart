@@ -14,6 +14,7 @@ class PortfolioController extends ChangeNotifier {
   List<ExperienceModel> experiences = [];
   List<SkillModel> skills = [];
   bool isLoading = true;
+  String? errorMessage;
 
   // --- TEMA (Dark/Light) ---
   ThemeMode _themeMode = ThemeMode.light;
@@ -47,12 +48,14 @@ class PortfolioController extends ChangeNotifier {
   // --- INICIALIZAÇÃO ---
   Future<void> loadAllData() async {
     isLoading = true;
+    errorMessage = null;
     notifyListeners();
 
     try {
       await Future.wait([_loadProjects(), _loadExperiences(), _loadSkills()]);
     } catch (e) {
       debugPrint('Erro ao carregar dados: $e');
+      errorMessage = 'Falha ao carregar dados. Verifique sua conexão.';
     } finally {
       isLoading = false;
       notifyListeners();

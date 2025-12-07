@@ -94,12 +94,56 @@ class GlassHeader extends StatelessWidget {
                           ],
                         )
                       else
-                        // Mobile: Apenas o Toggle por enquanto (menu drawer seria ideal)
-                        IconButton(
+                        // Mobile: Menu Dropdown
+                        PopupMenuButton<String>(
                           icon: Icon(
-                            isDark ? Icons.light_mode : Icons.dark_mode,
+                            Icons.menu,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
-                          onPressed: controller.toggleTheme,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          onSelected: (value) {
+                            if (value == 'theme') {
+                              controller.toggleTheme();
+                            } else if (value == 'skills') {
+                              controller.scrollToSection(controller.skillsKey);
+                            } else if (value == 'experience') {
+                              controller
+                                  .scrollToSection(controller.experienceKey);
+                            } else if (value == 'projects') {
+                              controller.scrollToSection(controller.projectsKey);
+                            }
+                          },
+                          itemBuilder: (BuildContext context) => [
+                            const PopupMenuItem(
+                              value: 'skills',
+                              child: Text('Skills'),
+                            ),
+                            const PopupMenuItem(
+                              value: 'experience',
+                              child: Text('Experiência'),
+                            ),
+                            const PopupMenuItem(
+                              value: 'projects',
+                              child: Text('Projetos'),
+                            ),
+                            PopupMenuItem(
+                              value: 'theme',
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    isDark ? Icons.light_mode : Icons.dark_mode,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(isDark ? 'Modo Claro' : 'Modo Escuro'),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                     ],
                   ),
