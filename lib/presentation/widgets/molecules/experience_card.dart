@@ -29,7 +29,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
         curve: Curves.easeOut,
         margin: const EdgeInsets.only(bottom: 24, left: 16),
         padding: const EdgeInsets.all(24),
-        transform: Matrix4.identity()..translate(0.0, _isHovered ? -4.0 : 0.0),
+        transform: Matrix4.translationValues(0.0, _isHovered ? -4.0 : 0.0, 0.0),
         decoration: BoxDecoration(
           color:
               theme.cardTheme.color ??
