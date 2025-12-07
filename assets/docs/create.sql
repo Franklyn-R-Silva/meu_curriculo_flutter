@@ -44,3 +44,6 @@ alter table skills enable row level security;
 create policy "Qualquer um pode ler skills" on skills for select using (true);
 
 ALTER TABLE skills ADD COLUMN icon_url text;
+
+alter table certificates enable row level security;
+create policy "Public Access" on certificates for select using (true);

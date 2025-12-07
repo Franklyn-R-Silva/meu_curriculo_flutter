@@ -70,14 +70,15 @@ class SupabaseRepository implements IPortfolioRepository {
   Future<List<CertificateModel>> getCertificates() async {
     try {
       final response = await _client
-          .from('certificates')
+          .from('certificates') // Nome da tabela que criamos
           .select()
-          .order('date', ascending: false);
+          .order('created_at', ascending: false);
 
       return (response as List)
           .map((e) => CertificateModel.fromMap(e))
           .toList();
     } catch (e) {
+      // Log de erro para ajudar no debug
       print('Erro ao buscar certificados: $e');
       return [];
     }
