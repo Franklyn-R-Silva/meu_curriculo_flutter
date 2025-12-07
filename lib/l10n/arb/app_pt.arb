@@ -1,0 +1,7 @@
+{
+    "@@locale": "pt",
+    "appTitle": "Franklyn Roberto - Portfólio",
+    "errorMessage": "Falha ao carregar dados. Verifique sua conexão.",
+    "adminModeDetected": "🕵️ Modo Admin Detectado!",
+    "retry": "Tentar novamente"
+}

@@ -24,7 +24,7 @@ class GlassHeader extends StatelessWidget {
       child:
           Container(
             margin: const EdgeInsets.only(top: 20),
-            constraints: const BoxConstraints(maxWidth: 1000),
+            constraints: const BoxConstraints(maxWidth: 1200),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: BackdropFilter(

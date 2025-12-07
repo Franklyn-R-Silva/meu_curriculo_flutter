@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
+import 'package:meu_curriculo_flutter/l10n/arb/app_localizations.dart';
 import 'core/constants/app_constants.dart';
 import 'core/theme/app_theme.dart';
 import 'data/repositories/portfolio_repository.dart';
 import 'data/repositories/supabase_repository.dart';
+import 'presentation/controllers/auth_controller.dart';
 import 'presentation/controllers/portfolio_controller.dart';
 import 'presentation/pages/home_page.dart';
-
-import 'presentation/controllers/auth_controller.dart'; // <--- Importe o AuthController
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,8 +60,16 @@ class MeuCurriculoApp extends StatelessWidget {
       child: Consumer<PortfolioController>(
         builder: (context, controller, child) {
           return MaterialApp(
-            title: 'Franklyn Roberto - Portfólio',
+            onGenerateTitle: (context) =>
+                AppLocalizations.of(context)!.appTitle,
             debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: controller.themeMode,
