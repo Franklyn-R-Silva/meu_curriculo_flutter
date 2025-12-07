@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import '../../../core/constants/tech_suggestions.dart';
 
 class TechAutocompleteField extends StatelessWidget {
