@@ -6,25 +6,26 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages # usa o ambiente com os secrets
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Create .env file from Secrets
+      - name: Create .env file from Environment Secrets
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           echo "SUPABASE_URL=$SUPABASE_URL" > .env
           echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
-
-      - name: Verify .env Content (SUCCESS)
-        run: cat .env
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
