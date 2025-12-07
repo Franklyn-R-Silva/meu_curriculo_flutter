@@ -28,9 +28,9 @@ class _IntroOverlayState extends State<IntroOverlay> {
     "Compilando experiência...",
     "Carregando portfólio...",
     "Verificando integridade...",
-    "Acesso autorizado."
+    "Acesso autorizado.",
   ];
-  
+
   Timer? _logTimer;
   bool _isExiting = false;
   bool _showAccessGranted = false;
@@ -78,7 +78,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
 
   void _startExitSequence() async {
     if (_isExiting) return;
-    
+
     // Aguarda um pouco para mostrar "Acesso Autorizado" ou similar se quiser
     setState(() {
       _showAccessGranted = true;
@@ -90,7 +90,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
       setState(() {
         _isExiting = true;
       });
-      
+
       // Tempo da animação de saída (slide das cortinas)
       await Future.delayed(const Duration(milliseconds: 1000));
       widget.onFinished();
@@ -132,22 +132,24 @@ class _IntroOverlayState extends State<IntroOverlay> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
-                            FontAwesomeIcons.code,
-                            size: 60,
-                            color: primaryColor,
-                          )
+                                FontAwesomeIcons.code,
+                                size: 60,
+                                color: primaryColor,
+                              )
                               .animate(onPlay: (c) => c.repeat())
                               .shimmer(duration: 2.seconds, color: Colors.white)
                               .scale(
-                                  begin: const Offset(1, 1),
-                                  end: const Offset(1.1, 1.1),
-                                  duration: 1.seconds,
-                                  curve: Curves.easeInOut)
+                                begin: const Offset(1, 1),
+                                end: const Offset(1.1, 1.1),
+                                duration: 1.seconds,
+                                curve: Curves.easeInOut,
+                              )
                               .then()
                               .scale(
-                                  begin: const Offset(1.1, 1.1),
-                                  end: const Offset(1, 1),
-                                  duration: 1.seconds),
+                                begin: const Offset(1.1, 1.1),
+                                end: const Offset(1, 1),
+                                duration: 1.seconds,
+                              ),
                           const SizedBox(height: 20),
                           Text(
                             "SYSTEM INITIALIZATION",
@@ -216,13 +218,13 @@ class _IntroOverlayState extends State<IntroOverlay> {
                                   BoxShadow(
                                     color: Colors.green.withOpacity(0.8),
                                     blurRadius: 20,
-                                  )
+                                  ),
                                 ],
                               ),
-                            )
-                                .animate()
-                                .fadeIn()
-                                .scale(duration: 400.ms, curve: Curves.easeOutBack),
+                            ).animate().fadeIn().scale(
+                              duration: 400.ms,
+                              curve: Curves.easeOutBack,
+                            ),
 
                           const SizedBox(height: 30),
 
@@ -232,7 +234,9 @@ class _IntroOverlayState extends State<IntroOverlay> {
                             child: Column(
                               children: _logs.map((log) {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 2),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 2,
+                                  ),
                                   child: Text(
                                     "> $log",
                                     style: TextStyle(
@@ -241,7 +245,10 @@ class _IntroOverlayState extends State<IntroOverlay> {
                                       fontSize: 12,
                                     ),
                                   ),
-                                ).animate().fadeIn().slideX(begin: -0.1, end: 0);
+                                ).animate().fadeIn().slideX(
+                                  begin: -0.1,
+                                  end: 0,
+                                );
                               }).toList(),
                             ),
                           ),
@@ -253,7 +260,7 @@ class _IntroOverlayState extends State<IntroOverlay> {
             ),
           ),
         ),
-        
+
         // Linha divisória central (some ao abrir)
         if (!_isExiting)
           Center(

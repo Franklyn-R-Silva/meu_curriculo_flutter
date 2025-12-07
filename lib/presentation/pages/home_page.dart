@@ -82,7 +82,8 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               children: [
                                 HeroSection(
-                                    key: controller.heroKey), // Key aqui
+                                  key: controller.heroKey,
+                                ), // Key aqui
                                 const SizedBox(height: 100),
 
                                 const Divider(height: 1, thickness: 0.5),
