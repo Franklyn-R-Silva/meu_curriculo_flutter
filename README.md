@@ -228,14 +228,14 @@ USER INTERACTION
 
 ### **Benefícios da Arquitetura**
 
-| Benefício | Descrição |
-|-----------|-----------|
-| **🧪 Testabilidade** | Fácil criar mocks para testes unitários |
-| **🔧 Manutenibilidade** | Mudanças isoladas não afetam outras camadas |
-| **📈 Escalabilidade** | Fácil adicionar novas features sem quebrar código existente |
-| **🔄 Reusabilidade** | Componentes podem ser reutilizados em diferentes contextos |
-| **👥 Colaboração** | Estrutura clara facilita trabalho em equipe |
-| **🐛 Debugging** | Fluxo de dados previsível facilita identificação de bugs |
+| Benefício               | Descrição                                                   |
+| ----------------------- | ----------------------------------------------------------- |
+| **🧪 Testabilidade**    | Fácil criar mocks para testes unitários                     |
+| **🔧 Manutenibilidade** | Mudanças isoladas não afetam outras camadas                 |
+| **📈 Escalabilidade**   | Fácil adicionar novas features sem quebrar código existente |
+| **🔄 Reusabilidade**    | Componentes podem ser reutilizados em diferentes contextos  |
+| **👥 Colaboração**      | Estrutura clara facilita trabalho em equipe                 |
+| **🐛 Debugging**        | Fluxo de dados previsível facilita identificação de bugs    |
 
 ---
 
