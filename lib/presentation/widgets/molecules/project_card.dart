@@ -6,14 +6,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
-import '../../../core/constants/app_constants.dart';
-import '../../../data/models/project_model.dart';
-import '../atoms/tech_chip.dart';
+import 'package:meu_curriculo_flutter/core/constants/app_constants.dart';
+import 'package:meu_curriculo_flutter/data/models/project_model.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/tech_chip.dart';
 
 class ProjectCard extends StatefulWidget {
   final ProjectModel project;
 
-  const ProjectCard({super.key, required this.project});
+  const ProjectCard({required this.project, super.key});
 
   @override
   State<ProjectCard> createState() => _ProjectCardState();
@@ -32,7 +32,7 @@ class _ProjectCardState extends State<ProjectCard> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -42,7 +42,7 @@ class _ProjectCardState extends State<ProjectCard> {
         _isHovered.value = false;
         _mousePos.value = Offset.zero;
       },
-      onHover: (details) {
+      onHover: (final details) {
         final renderBox = context.findRenderObject() as RenderBox;
         final size = renderBox.size;
         final center = Offset(size.width / 2, size.height / 2);
@@ -50,7 +50,7 @@ class _ProjectCardState extends State<ProjectCard> {
       },
       child: AnimatedBuilder(
         animation: Listenable.merge([_mousePos, _isHovered]),
-        builder: (context, child) {
+        builder: (final context, final child) {
           final hovered = _isHovered.value;
           final mouse = _mousePos.value;
 
@@ -138,7 +138,7 @@ class _ProjectCardState extends State<ProjectCard> {
                           runSpacing: 6,
                           children: widget.project.techStack
                               .take(3)
-                              .map((t) => TechChip(label: t))
+                              .map((final t) => TechChip(label: t))
                               .toList(),
                         ),
                         const SizedBox(height: 12),

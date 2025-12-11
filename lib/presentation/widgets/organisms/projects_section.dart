@@ -7,16 +7,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:meu_curriculo_flutter/core/constants/app_constants.dart';
-import '../../../data/models/project_model.dart';
-import '../molecules/project_card.dart';
+import 'package:meu_curriculo_flutter/data/models/project_model.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/molecules/project_card.dart';
 
 class ProjectsSection extends StatelessWidget {
   final List<ProjectModel> projects;
 
-  const ProjectsSection({super.key, required this.projects});
+  const ProjectsSection({required this.projects, super.key});
 
-  void _launchGitHub() async {
-    final Uri url = Uri.parse(AppStrings.gitHubRepositoriesUrl);
+  Future<void> _launchGitHub() async {
+    final url = Uri.parse(AppStrings.gitHubRepositoriesUrl);
 
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw 'Could not launch $url';
@@ -24,7 +24,7 @@ class ProjectsSection extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,7 +32,7 @@ class ProjectsSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "PROJETOS EM DESTAQUE",
+              'PROJETOS EM DESTAQUE',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.2,
@@ -42,16 +42,16 @@ class ProjectsSection extends StatelessWidget {
             TextButton.icon(
               onPressed: _launchGitHub,
               icon: const Icon(Icons.arrow_forward),
-              label: const Text("Ver todos no GitHub"),
+              label: const Text('Ver todos no GitHub'),
             ),
           ],
         ),
         const SizedBox(height: 24),
 
         LayoutBuilder(
-          builder: (context, constraints) {
+          builder: (final context, final constraints) {
             // Lógica responsiva para o Grid
-            int crossAxisCount = 1;
+            var crossAxisCount = 1;
             if (constraints.maxWidth > 1100) {
               crossAxisCount = 3;
             } else if (constraints.maxWidth > 700) {
@@ -68,7 +68,7 @@ class ProjectsSection extends StatelessWidget {
                 childAspectRatio: 1.3,
               ),
               itemCount: projects.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (final context, final index) {
                 return ProjectCard(project: projects[index])
                     .animate()
                     .fadeIn(delay: (index * 100).ms)

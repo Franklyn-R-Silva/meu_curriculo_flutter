@@ -5,18 +5,18 @@ import 'dart:developer';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
-import '../../core/utils/app_logger.dart';
-import '../models/certificate_model.dart';
-import '../models/experience_model.dart';
-import '../models/project_model.dart';
-import '../models/skill_model.dart';
-import 'portfolio_repository.dart';
+import 'package:meu_curriculo_flutter/core/utils/app_logger.dart';
+import 'package:meu_curriculo_flutter/data/models/certificate_model.dart';
+import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
+import 'package:meu_curriculo_flutter/data/models/project_model.dart';
+import 'package:meu_curriculo_flutter/data/models/skill_model.dart';
+import 'package:meu_curriculo_flutter/data/repositories/portfolio_repository.dart';
 
 class SupabaseRepository implements IPortfolioRepository {
   final SupabaseClient _client = Supabase.instance.client;
 
   // --- AUTH ---
-  Future<bool> signIn(String email, String password) async {
+  Future<bool> signIn(final String email, final String password) async {
     try {
       final response = await _client.auth.signInWithPassword(
         email: email,
@@ -43,21 +43,21 @@ class SupabaseRepository implements IPortfolioRepository {
   // --- CRUD GENÉRICO (Para evitar repetição) ---
 
   // Create
-  Future<void> createItem(String table, Map<String, dynamic> data) async {
+  Future<void> createItem(final String table, final Map<String, dynamic> data) async {
     await _client.from(table).insert(data);
   }
 
   // Update
   Future<void> updateItem(
-    String table,
-    int id,
-    Map<String, dynamic> data,
+    final String table,
+    final int id,
+    final Map<String, dynamic> data,
   ) async {
     await _client.from(table).update(data).eq('id', id);
   }
 
   // Delete
-  Future<void> deleteItem(String table, int id) async {
+  Future<void> deleteItem(final String table, final int id) async {
     await _client.from(table).delete().eq('id', id);
   }
 
@@ -71,7 +71,7 @@ class SupabaseRepository implements IPortfolioRepository {
 
       return (response as List)
           .map(
-            (e) => ProjectModel.fromMap(e),
+            (final e) => ProjectModel.fromMap(e),
           ) // Certifique-se que ProjectModel tem o método fromMap
           .toList();
     } catch (e, stack) {
@@ -96,7 +96,7 @@ class SupabaseRepository implements IPortfolioRepository {
 
       return (response as List)
           .map(
-            (e) => ExperienceModel.fromMap(e),
+            (final e) => ExperienceModel.fromMap(e),
           ) // Certifique-se que ExperienceModel tem fromMap
           .toList();
     } catch (e, stack) {
@@ -120,7 +120,7 @@ class SupabaseRepository implements IPortfolioRepository {
 
       return (response as List)
           .map(
-            (e) => SkillModel.fromMap(e),
+            (final e) => SkillModel.fromMap(e),
           ) // Certifique-se que SkillModel tem fromMap
           .toList();
     } catch (e, stack) {
@@ -143,7 +143,7 @@ class SupabaseRepository implements IPortfolioRepository {
           .order('created_at', ascending: false);
 
       return (response as List)
-          .map((e) => CertificateModel.fromMap(e))
+          .map((final e) => CertificateModel.fromMap(e))
           .toList();
     } catch (e, stack) {
       await AppLogger.log(

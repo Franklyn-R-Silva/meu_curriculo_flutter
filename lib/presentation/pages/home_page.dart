@@ -9,21 +9,21 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
+import 'package:meu_curriculo_flutter/core/constants/app_constants.dart';
 import 'package:meu_curriculo_flutter/l10n/arb/app_localizations.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/auth_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/portfolio_controller.dart';
 import 'package:meu_curriculo_flutter/presentation/pages/admin/admin_dashboard_page.dart';
 import 'package:meu_curriculo_flutter/presentation/pages/admin/login_page.dart';
-import '../../../core/constants/app_constants.dart';
-import '../controllers/auth_controller.dart';
-import '../controllers/portfolio_controller.dart';
-import '../widgets/organisms/certificates_section.dart';
-import '../widgets/organisms/experience_section.dart';
-import '../widgets/organisms/glass_header.dart';
-import '../widgets/organisms/hero_section.dart';
-import '../widgets/organisms/projects_section.dart';
-import '../widgets/organisms/skills_section.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/organisms/certificates_section.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/organisms/experience_section.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/organisms/glass_header.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/organisms/hero_section.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/organisms/projects_section.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/organisms/skills_section.dart';
 
-import '../widgets/atoms/background_pattern.dart'; // Importe a textura
-import '../widgets/organisms/intro_overlay.dart'; // Importe o IntroOverlay
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/background_pattern.dart'; // Importe a textura
+import 'package:meu_curriculo_flutter/presentation/widgets/organisms/intro_overlay.dart'; // Importe o IntroOverlay
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -71,13 +71,13 @@ class _HomePageState extends State<HomePage> {
       // Navega para o Login
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+        MaterialPageRoute(builder: (final context) => const LoginPage()),
       );
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final controller = context.watch<PortfolioController>();
 
     return Scaffold(
@@ -162,17 +162,17 @@ class _HomePageState extends State<HomePage> {
                                       .translucent, // Garante que o toque funcione bem
                                   child: Padding(
                                     padding: const EdgeInsets.all(
-                                      8.0,
+                                      8,
                                     ), // Aumenta a área de toque
                                     child: Column(
                                       children: [
                                         const Text(
-                                          "Feito com Flutter 3.27 & 💙",
+                                          'Feito com Flutter 3.27 & 💙',
                                           style: TextStyle(color: Colors.grey),
                                         ),
                                         const SizedBox(height: 8),
                                         Text(
-                                          "© ${DateTime.now().year} Franklyn Roberto",
+                                          '© ${DateTime.now().year} Franklyn Roberto',
                                           style: const TextStyle(
                                             color: Colors.grey,
                                             fontSize: 12,
@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildFloatingActionButtons(BuildContext context) {
+  Widget _buildFloatingActionButtons(final BuildContext context) {
     final authController = context.watch<AuthController>();
     final isLoggedIn = authController.isLogged;
 
@@ -227,7 +227,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AdminDashboardPage(),
+                  builder: (final context) => const AdminDashboardPage(),
                 ),
               );
             },
@@ -241,7 +241,7 @@ class _HomePageState extends State<HomePage> {
         FloatingActionButton.extended(
           heroTag: 'download_fab',
           onPressed: () => launchUrl(Uri.parse(AppAssets.cvPtBr)),
-          label: const Text("Baixar CV"),
+          label: const Text('Baixar CV'),
           icon: const Icon(Icons.download_rounded),
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Colors.white,

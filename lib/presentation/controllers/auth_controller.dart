@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../data/repositories/supabase_repository.dart';
+import 'package:meu_curriculo_flutter/data/repositories/supabase_repository.dart';
 
 class AuthController extends ChangeNotifier {
   final SupabaseRepository repository;
@@ -22,7 +22,7 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  Future<bool> login(String email, String pass) async {
+  Future<bool> login(final String email, final String pass) async {
     final success = await repository.signIn(email, pass);
     if (success) notifyListeners();
     return success;

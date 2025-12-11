@@ -5,10 +5,10 @@ final supabase = Supabase.instance.client;
 
 class AppLogger {
   static Future<void> log({
-    required String level,
-    required String message,
-    String? stack,
-    String? userId,
+    required final String level,
+    required final String message,
+    final String? stack,
+    final String? userId,
   }) async {
     try {
       // Se não passar userId, tenta pegar o usuário autenticado
@@ -28,19 +28,19 @@ class AppLogger {
   }
 
   // Métodos auxiliares para facilitar o uso
-  static Future<void> info(String message, {String? stack}) async {
+  static Future<void> info(final String message, {final String? stack}) async {
     await log(level: 'info', message: message, stack: stack);
   }
 
-  static Future<void> debug(String message, {String? stack}) async {
+  static Future<void> debug(final String message, {final String? stack}) async {
     await log(level: 'debug', message: message, stack: stack);
   }
 
-  static Future<void> error(String message, {String? stack}) async {
+  static Future<void> error(final String message, {final String? stack}) async {
     await log(level: 'error', message: message, stack: stack);
   }
 
-  static Future<void> warning(String message, {String? stack}) async {
+  static Future<void> warning(final String message, {final String? stack}) async {
     await log(level: 'warning', message: message, stack: stack);
   }
 }

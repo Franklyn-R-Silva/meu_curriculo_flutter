@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../core/utils/app_logger.dart';
-import '../../../data/models/certificate_model.dart';
-import '../../controllers/auth_controller.dart';
-import '../../controllers/portfolio_controller.dart';
-import '../atoms/custom_text_field.dart';
-import '../atoms/tech_autocomplete_field.dart';
+import 'package:meu_curriculo_flutter/core/utils/app_logger.dart';
+import 'package:meu_curriculo_flutter/data/models/certificate_model.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/auth_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/portfolio_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/custom_text_field.dart';
+import 'package:meu_curriculo_flutter/presentation/widgets/atoms/tech_autocomplete_field.dart';
 
 class CertificateForm extends StatefulWidget {
   final CertificateModel? certificate;
@@ -116,7 +116,7 @@ class _CertificateFormState extends State<CertificateForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(

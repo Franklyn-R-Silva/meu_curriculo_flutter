@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../core/utils/app_logger.dart';
-import '../../../data/models/experience_model.dart';
-import '../../controllers/auth_controller.dart';
-import '../../controllers/portfolio_controller.dart';
+import 'package:meu_curriculo_flutter/core/utils/app_logger.dart';
+import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/auth_controller.dart';
+import 'package:meu_curriculo_flutter/presentation/controllers/portfolio_controller.dart';
 
 class ExperienceForm extends StatefulWidget {
   final ExperienceModel? experience;
@@ -103,7 +103,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
@@ -180,7 +180,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                         title: const Text('Trabalho Atual?'),
                         secondary: const Icon(Icons.check_circle_outline),
                         value: _isCurrent,
-                        onChanged: (val) => setState(() => _isCurrent = val),
+                        onChanged: (final val) => setState(() => _isCurrent = val),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                           side: BorderSide(color: Colors.grey.shade300),
@@ -229,12 +229,12 @@ class _ExperienceFormState extends State<ExperienceForm> {
   }
 
   Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    String? hint,
-    int maxLines = 1,
-    bool required = false,
+    required final TextEditingController controller,
+    required final String label,
+    required final IconData icon,
+    final String? hint,
+    final int maxLines = 1,
+    final bool required = false,
   }) {
     return TextFormField(
       controller: controller,
@@ -248,7 +248,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
         fillColor: Colors.grey.shade50,
       ),
       validator: required
-          ? (v) => v?.isEmpty == true ? 'Campo obrigatório' : null
+          ? (final v) => v?.isEmpty == true ? 'Campo obrigatório' : null
           : null,
     );
   }
