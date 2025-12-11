@@ -84,21 +84,22 @@ class _ProjectCardState extends State<ProjectCard> {
                 children: [
                   // Conteúdo do Card
                   Padding(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const FaIcon(
                               FontAwesomeIcons.folderOpen,
-                              size: 30,
+                              size: 28,
                               color: Color(AppColors.primary),
                             ),
                             FaIcon(
                               FontAwesomeIcons.arrowUpRightFromSquare,
-                              size: 16,
+                              size: 14,
                               color:
                                   theme.iconTheme.color?.withValues(
                                     alpha: 0.5,
@@ -107,33 +108,40 @@ class _ProjectCardState extends State<ProjectCard> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 16),
                         Text(
                           widget.project.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
+                            fontSize: 18,
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Text(
-                          widget.project.description,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            height: 1.5,
-                            color: theme.textTheme.bodyMedium?.color
-                                ?.withValues(alpha: 0.8),
+                        const SizedBox(height: 8),
+                        Flexible(
+                          child: Text(
+                            widget.project.description,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              height: 1.4,
+                              fontSize: 13,
+                              color: theme.textTheme.bodyMedium?.color
+                                  ?.withValues(alpha: 0.8),
+                            ),
                           ),
                         ),
-                        const Spacer(),
+                        const SizedBox(height: 12),
                         Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
+                          spacing: 6,
+                          runSpacing: 6,
                           children: widget.project.techStack
                               .take(3)
                               .map((t) => TechChip(label: t))
                               .toList(),
                         ),
+                        const SizedBox(height: 12),
                       ],
                     ),
                   ),
@@ -141,25 +149,27 @@ class _ProjectCardState extends State<ProjectCard> {
                   // Efeito de Brilho (Gradient Overlay) ao passar o mouse
                   if (hovered)
                     Positioned.fill(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.white.withValues(
-                                alpha: isDark ? 0.1 : 0.4,
-                              ),
-                              Colors.transparent,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: const [0.0, 0.4],
+                      child: IgnorePointer(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white.withValues(
+                                  alpha: isDark ? 0.1 : 0.4,
+                                ),
+                                Colors.transparent,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              stops: const [0.0, 0.4],
+                            ),
                           ),
                         ),
                       ),
                     ),
 
-                  // Link Clicável
+                  // Link Clicável para o GitHub (todo o card)
                   Positioned.fill(
                     child: Material(
                       color: Colors.transparent,
@@ -170,6 +180,38 @@ class _ProjectCardState extends State<ProjectCard> {
                       ),
                     ),
                   ),
+
+                  // Botão Live Demo (se existir) - Por último para ficar por cima
+                  if (widget.project.liveUrl != null &&
+                      widget.project.liveUrl!.isNotEmpty)
+                    Positioned(
+                      left: 20,
+                      right: 20,
+                      bottom: 20,
+                      child: MouseRegion(
+                        onEnter: (_) => _isHovered.value = false,
+                        onExit: (_) {},
+                        child: ElevatedButton.icon(
+                          onPressed: () => launchUrl(
+                            Uri.parse(widget.project.liveUrl!),
+                          ),
+                          icon: const FaIcon(
+                            FontAwesomeIcons.arrowUpRightFromSquare,
+                            size: 16,
+                          ),
+                          label: const Text('Ver Demo'),
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                            backgroundColor: theme.colorScheme.primary,
+                            foregroundColor: Colors.white,
+                            elevation: 3,
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
