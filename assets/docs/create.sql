@@ -70,3 +70,27 @@ create policy "Admin Delete Skills" on skills for delete to authenticated using 
 create policy "Admin Insert Certs" on certificates for insert to authenticated with check (true);
 create policy "Admin Update Certs" on certificates for update to authenticated using (true);
 create policy "Admin Delete Certs" on certificates for delete to authenticated using (true);
+
+
+create table app_logs (
+  id bigserial primary key,
+  level text,         -- info, debug, error
+  message text,
+  stack text,
+  timestamp timestamptz default now(),
+  user_id uuid        -- opcional, se tiver login
+);
+
+-- Permitir que o usuário insira apenas logs com user_id igual ao seu UID
+create policy "Usuário pode inserir seu próprio log"
+on app_logs
+for insert
+with check (auth.uid() = user_id);
+
+-- Permitir que o usuário selecione apenas seus próprios logs
+create policy "Usuário pode ler seus próprios logs"
+on app_logs
+for select
+using (auth.uid() = user_id);
+
+
