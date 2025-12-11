@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
+import '../../core/utils/app_logger.dart';
 import '../models/certificate_model.dart';
 import '../models/experience_model.dart';
 import '../models/project_model.dart';
@@ -22,7 +23,12 @@ class SupabaseRepository implements IPortfolioRepository {
         password: password,
       );
       return response.user != null;
-    } catch (e) {
+    } catch (e, stack) {
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
       log('Erro login: $e');
       return false;
     }
@@ -68,7 +74,12 @@ class SupabaseRepository implements IPortfolioRepository {
             (e) => ProjectModel.fromMap(e),
           ) // Certifique-se que ProjectModel tem o método fromMap
           .toList();
-    } catch (e) {
+    } catch (e, stack) {
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
       // Em caso de erro, retorna lista vazia ou lança exceção
       log('Erro ao buscar projetos: $e');
       return [];
@@ -88,7 +99,12 @@ class SupabaseRepository implements IPortfolioRepository {
             (e) => ExperienceModel.fromMap(e),
           ) // Certifique-se que ExperienceModel tem fromMap
           .toList();
-    } catch (e) {
+    } catch (e, stack) {
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
       log('Erro ao buscar experiências: $e');
       return [];
     }
@@ -107,7 +123,12 @@ class SupabaseRepository implements IPortfolioRepository {
             (e) => SkillModel.fromMap(e),
           ) // Certifique-se que SkillModel tem fromMap
           .toList();
-    } catch (e) {
+    } catch (e, stack) {
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
       log('Erro ao buscar skills: $e');
       return [];
     }
@@ -124,7 +145,12 @@ class SupabaseRepository implements IPortfolioRepository {
       return (response as List)
           .map((e) => CertificateModel.fromMap(e))
           .toList();
-    } catch (e) {
+    } catch (e, stack) {
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
       // Log de erro para ajudar no debug
       log('Erro ao buscar certificados: $e');
       return [];

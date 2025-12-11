@@ -9,6 +9,7 @@ import 'package:meu_curriculo_flutter/data/models/certificate_model.dart';
 import 'package:meu_curriculo_flutter/data/models/experience_model.dart';
 import 'package:meu_curriculo_flutter/data/models/project_model.dart';
 import 'package:meu_curriculo_flutter/data/models/skill_model.dart';
+import '../../../core/utils/app_logger.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/portfolio_controller.dart';
 import '../../widgets/forms/certificate_form.dart';
@@ -72,7 +73,12 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
           );
           portfolio.loadAllData();
         }
-      } catch (e) {
+      } catch (e, stack) {
+        await AppLogger.log(
+          level: 'error',
+          message: e.toString(),
+          stack: stack.toString(),
+        );
         if (mounted) {
           ScaffoldMessenger.of(
             context,

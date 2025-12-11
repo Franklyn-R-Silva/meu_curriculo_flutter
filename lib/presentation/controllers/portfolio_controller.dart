@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import '../../core/utils/app_logger.dart';
 import '../../data/models/certificate_model.dart';
 import '../../data/models/experience_model.dart';
 import '../../data/models/project_model.dart';
@@ -64,9 +65,14 @@ class PortfolioController extends ChangeNotifier {
         _loadSkills(),
         _loadCertificates(),
       ]);
-    } catch (e) {
+    } catch (e, stack) {
       debugPrint('Erro ao carregar dados: $e');
       errorMessage = 'Falha ao carregar dados. Verifique sua conexão.';
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
     } finally {
       isLoading = false;
       notifyListeners();

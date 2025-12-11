@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import '../../../core/utils/app_logger.dart';
 import '../../../data/models/project_model.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/portfolio_controller.dart';
@@ -89,7 +90,12 @@ class _ProjectFormState extends State<ProjectForm> {
           const SnackBar(content: Text('Projeto salvo com sucesso!')),
         );
       }
-    } catch (e) {
+    } catch (e, stack) {
+      await AppLogger.log(
+        level: 'error',
+        message: e.toString(),
+        stack: stack.toString(),
+      );
       if (mounted) {
         ScaffoldMessenger.of(
           context,
