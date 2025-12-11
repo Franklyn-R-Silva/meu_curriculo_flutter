@@ -192,9 +192,8 @@ class _ProjectCardState extends State<ProjectCard> {
                         onEnter: (_) => _isHovered.value = false,
                         onExit: (_) {},
                         child: ElevatedButton.icon(
-                          onPressed: () => launchUrl(
-                            Uri.parse(widget.project.liveUrl!),
-                          ),
+                          onPressed: () =>
+                              launchUrl(Uri.parse(widget.project.liveUrl!)),
                           icon: const FaIcon(
                             FontAwesomeIcons.arrowUpRightFromSquare,
                             size: 16,
