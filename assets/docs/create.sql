@@ -74,23 +74,36 @@ create policy "Admin Delete Certs" on certificates for delete to authenticated u
 
 create table app_logs (
   id bigserial primary key,
-  level text,         -- info, debug, error
+  level text,         -- info, debug, error, warning
   message text,
   stack text,
   timestamp timestamptz default now(),
   user_id uuid        -- opcional, se tiver login
 );
 
--- Permitir que o usuário insira apenas logs com user_id igual ao seu UID
-create policy "Usuário pode inserir seu próprio log"
+-- Habilitar RLS
+alter table app_logs enable row level security;
+
+-- Permitir inserção de logs (autenticados ou anônimos)
+create policy "Qualquer um pode inserir logs"
 on app_logs
 for insert
-with check (auth.uid() = user_id);
+with check (true);
 
 -- Permitir que o usuário selecione apenas seus próprios logs
 create policy "Usuário pode ler seus próprios logs"
 on app_logs
 for select
 using (auth.uid() = user_id);
+
+-- Permitir que admins leiam todos os logs
+create policy "Admin pode ler todos os logs"
+on app_logs
+for select
+using (auth.uid() IN (
+  -- Adicione aqui os UUIDs dos usuários admin
+  -- Exemplo: 'uuid-do-admin-1', 'uuid-do-admin-2'
+  select id from auth.users where email = 'seu-email-admin@exemplo.com'
+));
 
 
